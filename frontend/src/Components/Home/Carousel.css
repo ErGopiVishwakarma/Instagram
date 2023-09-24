@@ -1,0 +1,47 @@
+.carousel-container {
+    position: relative;
+    max-width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .carousel-wrapper {
+    overflow: hidden;
+  }
+  
+  .carousel {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .item {
+    flex: 0 0 auto;
+    width: 100px;
+    padding: 10px;
+    margin-right: 10px;
+    background-color: lightgray;
+  }
+  
+  .next-button, .prev-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .next-button {
+    right: 0;
+  }
+  
+  .prev-button {
+    left: 0;
+  }
+  
+  .next-button:hover, .prev-button:hover {
+    background-color: #0056b3;
+  }
+  
