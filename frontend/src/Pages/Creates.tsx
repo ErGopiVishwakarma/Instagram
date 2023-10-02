@@ -219,7 +219,16 @@ export default function Create({ children }: Children) {
                   <p className='text-base'>1:1</p>
                   <BsSquare className='h-5 w-5' />
                 </div>
-                <div
+                <div className={`flex gap-4 py-2 px-3 items-center w-full border-b-[1px] border-solid border-white ${
+                    selectHighlight === 2 ? 'text-white' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectHighlight(2);
+                    handleCrop(4 / 5);
+                  }}>
+                  <p className='text-base'>4:5</p>
+                  <p className=' text-2xl'>▯</p>
+                </div>
 
     </>
   );
