@@ -247,6 +247,13 @@ export default function Create({ children }: Children) {
                 <BiCrop className=' h-6 w-6 text-white' />
               </button>
             </div>
+            <button
+              className=' bg-blue-500 rounded-lg text-white px-3 py-1 absolute right-5 bottom-5'
+              onClick={moveNextFun}>
+              next
+            </button>
+          </div>
+
 
     </>
   );
