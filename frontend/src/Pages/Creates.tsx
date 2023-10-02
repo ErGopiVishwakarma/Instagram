@@ -22,6 +22,10 @@ export default function Create({ children }: Children) {
   const [uploadReadyUrl, setUploadReadyUrl] = useState<any>();
   const [originalImage, setOriginalImage] = useState<any>();
   const [goNext, setGoNext] = useState<boolean>(false);
+  const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const [toggleShare, setToggleShare] = useState<boolean>(false);
+  const [selectHighlight, setSelectHighlight] = useState<number>(1);
+  const [toggleInitialPage, setToggleInitialPage] = useState<boolean>(true);
     </>
   );
 }
