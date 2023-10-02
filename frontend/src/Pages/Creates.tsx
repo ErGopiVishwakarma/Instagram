@@ -16,6 +16,9 @@ export default function Create({ children }: Children) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(!open);
   const cropperRef: any = useRef(null);
+  const [image, setImage] = useState<any>(null);
+  const [croppedImage, setCroppedImage] = useState<any>();
+  const [uploadedImage, setUploadedImage] = useState<string>('');
     </>
   );
 }
