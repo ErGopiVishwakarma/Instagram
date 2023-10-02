@@ -128,6 +128,19 @@ export default function Create({ children }: Children) {
             <GrClose />
           </div>
         </div>
+
+        {/* After uploading the image part here  */}
+        <div
+          className={`${
+            goNext ? 'flex' : 'hidden'
+          } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
+          <div>
+            <BsArrowLeftCircle className='h-6 w-6' />
+          </div>
+          <div onClick={handleOpen} className=' cursor-pointer'>
+            <GrClose />
+          </div>
+        </div>
     </>
   );
 }
