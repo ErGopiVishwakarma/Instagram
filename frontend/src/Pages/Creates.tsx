@@ -241,6 +241,12 @@ export default function Create({ children }: Children) {
                   <MdOutlineRectangle className='h-6 w-6' />
                 </div>
               </div>
+              <button
+                onClick={() => setToggleMenu((prev) => !prev)}
+                className=' p-1 rounded-xl hover:bg-blue-gray-200 bg-[#000000CC] h-7 w-7 flex justify-center items-center'>
+                <BiCrop className=' h-6 w-6 text-white' />
+              </button>
+            </div>
 
     </>
   );
