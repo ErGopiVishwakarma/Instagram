@@ -229,6 +229,18 @@ export default function Create({ children }: Children) {
                   <p className='text-base'>4:5</p>
                   <p className=' text-2xl'>▯</p>
                 </div>
+                <div
+                  className={`flex gap-4 py-2 px-3 items-center w-full ${
+                    selectHighlight === 3 ? 'text-white' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectHighlight(3);
+                    handleCrop(16 / 9);
+                  }}>
+                  <p className='text-base'>16:9</p>
+                  <MdOutlineRectangle className='h-6 w-6' />
+                </div>
+              </div>
 
     </>
   );
