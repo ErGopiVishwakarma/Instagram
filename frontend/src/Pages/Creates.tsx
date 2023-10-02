@@ -19,6 +19,9 @@ export default function Create({ children }: Children) {
   const [image, setImage] = useState<any>(null);
   const [croppedImage, setCroppedImage] = useState<any>();
   const [uploadedImage, setUploadedImage] = useState<string>('');
+  const [uploadReadyUrl, setUploadReadyUrl] = useState<any>();
+  const [originalImage, setOriginalImage] = useState<any>();
+  const [goNext, setGoNext] = useState<boolean>(false);
     </>
   );
 }
