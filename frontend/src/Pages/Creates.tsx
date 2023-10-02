@@ -205,6 +205,21 @@ export default function Create({ children }: Children) {
                     setCroppedImage(null);
                     setSelectHighlight(0);
                   }}>
+                     <p className='text-base'>original</p>
+                  <BiImageAlt className='h-5 w-5' />
+                </div>
+                <div
+                  className={`flex gap-4 py-2 px-3 items-center w-full border-b-[1px] border-solid border-white ${
+                    selectHighlight === 1 ? 'text-white' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectHighlight(1);
+                    handleCrop(1);
+                  }}>
+                  <p className='text-base'>1:1</p>
+                  <BsSquare className='h-5 w-5' />
+                </div>
+                <div
 
     </>
   );
