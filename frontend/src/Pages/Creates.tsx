@@ -41,6 +41,20 @@ export default function Create({ children }: Children) {
       reader.readAsDataURL(files[0]);
     }
   };
+
+   // image crop functionality
+   const handleCrop = (aspectRatio: any) => {
+    if (cropperRef.current) {
+      const cropper = cropperRef.current.cropper;
+      cropper.setAspectRatio(aspectRatio);
+      const croppedCanvas = cropper.getCroppedCanvas();
+      setUploadReadyUrl(croppedCanvas);
+      if (croppedCanvas) {
+        const croppedImageUrl = croppedCanvas.toDataURL();
+        setCroppedImage(croppedImageUrl);
+      }
+    }
+  };
     </>
   );
 }
