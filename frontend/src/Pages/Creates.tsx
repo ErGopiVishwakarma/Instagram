@@ -253,7 +253,18 @@ export default function Create({ children }: Children) {
               next
             </button>
           </div>
-
+{/* here the final output where you can share the image  */}
+<div
+            className={`${
+              toggleShare ? 'flex' : 'hidden'
+            } items-center justify-center relative  h-[385px]`}>
+              <img
+                src={croppedImage ? croppedImage : originalImage}
+                className='object-cover max-h-[385px]'
+              />
+          </div>
+        </DialogBody>
+      </Dialog>
 
     </>
   );
