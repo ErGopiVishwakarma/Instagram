@@ -26,6 +26,21 @@ export default function Create({ children }: Children) {
   const [toggleShare, setToggleShare] = useState<boolean>(false);
   const [selectHighlight, setSelectHighlight] = useState<number>(1);
   const [toggleInitialPage, setToggleInitialPage] = useState<boolean>(true);
+
+  // handle change functionality
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target?.files;
+    if (files && files.length > 0) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setGoNext(true);
+        setToggleInitialPage(false);
+        setImage(reader.result);
+        setOriginalImage(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  };
     </>
   );
 }
