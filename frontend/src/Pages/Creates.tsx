@@ -116,6 +116,18 @@ export default function Create({ children }: Children) {
           background={false}
           draggable={true}
         />
+         </div>
+      <Dialog open={open} handler={handleOpen} className='text-black' size='sm'>
+        {/* dialog header part from here to  */}
+        <div
+          className={`${
+            toggleInitialPage ? 'flex' : 'hidden'
+          } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
+          <h3 className='text-base text-center'>Create new post</h3>
+          <div onClick={handleOpen} className=' cursor-pointer'>
+            <GrClose />
+          </div>
+        </div>
     </>
   );
 }
