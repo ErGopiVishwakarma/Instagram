@@ -182,6 +182,16 @@ export default function Create({ children }: Children) {
             </div>
           </div>
 
+          {/* After uploading the image part here  */}
+          <div
+            className={`${
+              goNext ? 'flex' : 'hidden'
+            } items-center justify-center relative  h-[385px]`}>
+            <img
+              src={croppedImage ? croppedImage : originalImage}
+              className='object-cover max-h-[385px]'
+            />
+
     </>
   );
 }
