@@ -81,6 +81,12 @@ export default function Create({ children }: Children) {
     // You can use croppedImage URL for further processing or display
     console.log('Cropped Image URL:', croppedImage);
   };
+
+  const moveNextFun = () => {
+    setToggleShare(true);
+    setToggleInitialPage(false);
+    setGoNext(false);
+  };
     </>
   );
 }
