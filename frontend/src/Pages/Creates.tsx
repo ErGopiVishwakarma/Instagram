@@ -155,6 +155,33 @@ export default function Create({ children }: Children) {
           </div>
         </div>
         {/* till here  */}
+
+        {/* dialog body part from here to till end  */}
+        <DialogBody className='p-0'>
+          <div
+            className={`py-28 ${
+              toggleInitialPage ? 'flex' : 'hidden'
+            } items-center justify-center`}>
+            <div className='flex justify-center flex-col items-center gap-5'>
+              <div>
+                <img src={popupImage} />
+              </div>
+              <p className='text-lg'>Drag photos and videos here</p>
+              <input
+                type='file'
+                id='image-media'
+                accept='image/*'
+                style={{ display: 'none' }}
+                onChange={handleImageChange}
+              />
+              <button className=' bg-blue-500 rounded-lg text-white py-1'>
+                <label htmlFor='image-media' className=' cursor-pointer px-5 '>
+                  Select from computer
+                </label>
+              </button>
+            </div>
+          </div>
+
     </>
   );
 }
