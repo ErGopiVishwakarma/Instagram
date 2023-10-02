@@ -87,6 +87,35 @@ export default function Create({ children }: Children) {
     setToggleInitialPage(false);
     setGoNext(false);
   };
+
+  return (
+    <>
+      <div onClick={handleOpen}>{children}</div>
+      {/* crop image container  */}
+      <div style={{ display: 'none' }}>
+        <Cropper
+          ref={cropperRef}
+          src={image}
+          style={{ width: '100%', height: '385px' }}
+          aspectRatio={1}
+          zoomable={false}
+          zoomOnWheel={false}
+          cropend={() => handleCrop(1)} // Crop 1:1
+          autoCrop={true}
+          autoCropArea={1}
+          movable={true}
+          cropBoxMovable={true}
+          minContainerHeight={90}
+          minContainerWidth={100}
+          guides={false}
+          center={false}
+          cropBoxResizable={true}
+          dragMode={'crop'}
+          responsive={true}
+          highlight={false}
+          background={false}
+          draggable={true}
+        />
     </>
   );
 }
