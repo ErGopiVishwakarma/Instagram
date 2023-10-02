@@ -55,6 +55,32 @@ export default function Create({ children }: Children) {
       }
     }
   };
+
+  // after croping the image to move forward function
+  const handleNext = () => {
+    if (uploadReadyUrl) {
+      // Convert the cropped image to a Blob
+      uploadReadyUrl.toBlob((blob: any) => {
+        const formData = new FormData();
+        formData.append('croppedImage', blob, 'image.jpg');
+
+        fetch('http://localhost:8080/upload', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setUploadedImage(data);
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
+    // You can use croppedImage URL for further processing or display
+    console.log('Cropped Image URL:', croppedImage);
+  };
     </>
   );
 }
