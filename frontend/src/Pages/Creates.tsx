@@ -191,6 +191,20 @@ export default function Create({ children }: Children) {
               src={croppedImage ? croppedImage : originalImage}
               className='object-cover max-h-[385px]'
             />
+             {/* menu part here  */}
+             <div className=' absolute bottom-5 left-5 flex flex-col gap-3'>
+              <div
+                className={`${
+                  toggleMenu ? 'flex' : 'hidden'
+                } flex-col bg-[#000000CC] rounded-md`}>
+                <div
+                  className={`flex gap-4 py-2 px-3 items-center w-full border-b-[1px] border-solid border-white ${
+                    selectHighlight === 0 ? 'text-white' : ''
+                  }`}
+                  onClick={() => {
+                    setCroppedImage(null);
+                    setSelectHighlight(0);
+                  }}>
 
     </>
   );
