@@ -13,7 +13,12 @@ import 'cropperjs/dist/cropper.css';
 import { MdOutlineRectangle, MdPermMedia } from 'react-icons/md';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { BsArrowLeftCircle, BsSquare } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewPost } from '../Redux/action';
+import { Initial } from '../Types/reducerType';
+import { PostType } from '../Types/otherType';
+import { AxiosResponse } from 'axios';
+import { UPDATEPOST } from '../Redux/actionType';
 
 interface Children {
   children: ReactNode;
@@ -34,18 +39,12 @@ export default function Create({ children }: Children) {
   const [selectHighlight, setSelectHighlight] = useState<number>(0);
   const [toggleInitialPage, setToggleInitialPage] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [size, setSize] = useState<number>();
   const [successfulPage, setSuccessfulPage] = useState<boolean>(false);
+  const [highlightText, setHighlightText] = useState<string>('');
 
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (!open) {
-      setToggleInitialPage(true);
-      setToggleShare(false);
-      setSuccessfulPage(false);
-      setGoNext(false);
-    }
-  }, [open]);
+  const data = useSelector((store: Initial) => store.localStorageData);
+  const dispatch = useDispatch();
 
   // handle change functionality
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +81,7 @@ export default function Create({ children }: Children) {
       setToggleShare(true);
       setToggleInitialPage(false);
       setGoNext(false);
-      setSuccessfulPage(false)
+      setSuccessfulPage(false);
       // Convert the cropped image to a Blob
       uploadReadyUrl.toBlob((blob: any) => {
         const formData = new FormData();
@@ -95,7 +94,6 @@ export default function Create({ children }: Children) {
           .then((response) => response.json())
           .then((data) => {
             setUploadedImage(data);
-            console.log(data);
           })
           .catch((error) => {
             console.log(error);
@@ -104,17 +102,54 @@ export default function Create({ children }: Children) {
     }
   };
 
-
   // share post function
-  const sharePost = () => {
-    if(!uploadedImage){
-      return
+  const sharePost = async () => {
+    
+    if (!uploadedImage) {
+      return;
     }
+    const config = {
+      postUrl: uploadedImage,
+      size: selectHighlight,
+      highlights: highlightText,
+    };
     setToggleShare(false);
     setToggleInitialPage(false);
     setGoNext(false);
     setSuccessfulPage(true);
+    setLoading(true);
+    fetch(`http://localhost:8080/post`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${data.token}`,
+      },
+      body: JSON.stringify(config),
+    })
+      .then((ress) => ress.json())
+      .then((res: AxiosResponse<PostType>) => {
+        const postData: any = res;
+         setLoading(false)
+        dispatch({ type: UPDATEPOST, payload: postData });
+      })
+      .catch((err: any) => {
+      setLoading(false);
+      console.log(err)
+      });    
   };
+
+  useEffect(() => {
+    if (!open) {
+      setToggleInitialPage(true);
+      setToggleShare(false);
+      setSuccessfulPage(false);
+      setGoNext(false);
+      setCroppedImage(null);
+      setSelectHighlight(0);
+      setHighlightText('')
+      setToggleMenu(false)
+    }
+  }, [open]);
 
   return (
     <>
@@ -284,6 +319,8 @@ export default function Create({ children }: Children) {
                 <input
                   className='w-[100%] h-10 align-middle flex focus:outline-none border-solid border-b-[1px] border-gray-600 text-black'
                   placeholder='add your highlight (optional)'
+                  onChange={(e) => setHighlightText(e.target.value)}
+                  value={highlightText}
                 />
                 <button
                   className='absolute right-0 top-[5px]  bg-blue-500 rounded-lg text-white px-2 py-[1px]'

@@ -11,7 +11,7 @@ import HomeSearch from '../Components/Home/HomeSearch';
 import SmSidebar from '../Components/sidebar/SmSidebar';
 
 const Home = () => {
-  const ab = useSelector((store) => console.log(store));
+  // const ab = useSelector((store) => console.log(store));
 
   return (
     <div className='w-full h-[100vh] flex  '>
@@ -26,15 +26,25 @@ const Home = () => {
         <MdSidebar />
       </div>
       {/* main div code of post  */}
-      <div className='w-full overflow-auto flex py-10 md:py-8 sm:py-14'>
+      <div className='w-full overflow-auto flex py-10 md:py-8 '>
         <div className='w-full md:w-full lg:w-[65%]'>
           <div className='w-[100%]'>
             <Following />
-            <div className='w-full md:w-[70%] lg:w-[70%] m-auto pb-10 px-2'>
-              <Post />
-              <div className='px-2'>
-                <Likeshare />
-                <Comment />
+            {/* all post come here  */}
+            <div className='flex flex-col gap-1 pt-5 md:pt-0 lg:pt-0 pb-12 '>
+              <div className='w-full md:w-[70%] lg:w-[70%] m-auto px-2'>
+                <Post />
+                <div className='px-2'>
+                  <Likeshare />
+                  <Comment />
+                </div>
+              </div>
+              <div className='w-full md:w-[70%] lg:w-[70%] m-auto  px-2'>
+                <Post />
+                <div className='px-2'>
+                  <Likeshare />
+                  <Comment />
+                </div>
               </div>
             </div>
           </div>
