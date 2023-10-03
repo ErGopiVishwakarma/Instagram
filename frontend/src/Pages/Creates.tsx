@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useContext, useRef } from 'react';
-import { Dialog, DialogBody } from '@material-tailwind/react';
+import { Avatar, Dialog, DialogBody } from '@material-tailwind/react';
 import { GrClose } from 'react-icons/gr';
 import popupImage from '../Images/postPopupImage.png';
 import Cropper from 'react-cropper';
@@ -24,7 +24,7 @@ export default function Create({ children }: Children) {
   const [goNext, setGoNext] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [toggleShare, setToggleShare] = useState<boolean>(false);
-  const [selectHighlight, setSelectHighlight] = useState<number>(1);
+  const [selectHighlight, setSelectHighlight] = useState<number>(0);
   const [toggleInitialPage, setToggleInitialPage] = useState<boolean>(true);
 
   // handle change functionality
@@ -42,8 +42,8 @@ export default function Create({ children }: Children) {
     }
   };
 
-   // image crop functionality
-   const handleCrop = (aspectRatio: any) => {
+  // image crop functionality
+  const handleCrop = (aspectRatio: any) => {
     if (cropperRef.current) {
       const cropper = cropperRef.current.cropper;
       cropper.setAspectRatio(aspectRatio);
@@ -116,7 +116,7 @@ export default function Create({ children }: Children) {
           background={false}
           draggable={true}
         />
-         </div>
+      </div>
       <Dialog open={open} handler={handleOpen} className='text-black' size='sm'>
         {/* dialog header part from here to  */}
         <div
@@ -142,8 +142,8 @@ export default function Create({ children }: Children) {
           </div>
         </div>
 
-         {/* here the final output where you can share the image  */}
-         <div
+        {/* here the final output where you can share the image  */}
+        <div
           className={`${
             toggleShare ? 'flex' : 'hidden'
           } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
@@ -191,8 +191,8 @@ export default function Create({ children }: Children) {
               src={croppedImage ? croppedImage : originalImage}
               className='object-cover max-h-[385px]'
             />
-             {/* menu part here  */}
-             <div className=' absolute bottom-5 left-5 flex flex-col gap-3'>
+            {/* menu part here  */}
+            <div className=' absolute bottom-5 left-5 flex flex-col gap-3'>
               <div
                 className={`${
                   toggleMenu ? 'flex' : 'hidden'
@@ -205,7 +205,7 @@ export default function Create({ children }: Children) {
                     setCroppedImage(null);
                     setSelectHighlight(0);
                   }}>
-                     <p className='text-base'>original</p>
+                  <p className='text-base'>original</p>
                   <BiImageAlt className='h-5 w-5' />
                 </div>
                 <div
@@ -219,7 +219,8 @@ export default function Create({ children }: Children) {
                   <p className='text-base'>1:1</p>
                   <BsSquare className='h-5 w-5' />
                 </div>
-                <div className={`flex gap-4 py-2 px-3 items-center w-full border-b-[1px] border-solid border-white ${
+                <div
+                  className={`flex gap-4 py-2 px-3 items-center w-full border-b-[1px] border-solid border-white ${
                     selectHighlight === 2 ? 'text-white' : ''
                   }`}
                   onClick={() => {
@@ -253,19 +254,37 @@ export default function Create({ children }: Children) {
               next
             </button>
           </div>
-{/* here the final output where you can share the image  */}
-<div
+
+          {/* here the final output where you can share the image  */}
+          <div
             className={`${
               toggleShare ? 'flex' : 'hidden'
-            } items-center justify-center relative  h-[385px]`}>
-              <img
-                src={croppedImage ? croppedImage : originalImage}
-                className='object-cover max-h-[385px]'
-              />
+            } items-center justify-center relative  h-[400px] flex-col`}>
+            <div className='h-[80px] flex items-start flex-col gap-1 w-full px-4'>
+              <div className='flex gap-2 w-full items-center'>
+                <Avatar
+                  className='h-7 w-7'
+                  src='https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80'
+                />
+                <p className='text-sm'>gopi_v777</p>
+              </div>
+              <div className='relative hidden md:block lg:block w-full'>
+                <input
+                  className='w-[100%] h-10 align-middle flex focus:outline-none border-solid border-b-[1px] border-gray-600 text-black'
+                  placeholder='add your highlight (optional)'
+                />
+                <button className='absolute right-0 top-[5px]  bg-blue-500 rounded-lg text-white px-2 py-[1px]'>
+                  share
+                </button>
+              </div>
+            </div>
+            <img
+              src={croppedImage ? croppedImage : originalImage}
+              className='object-cover max-h-[320px]'
+            />
           </div>
         </DialogBody>
       </Dialog>
-
     </>
   );
 }
