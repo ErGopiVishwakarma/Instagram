@@ -1,5 +1,11 @@
-import React, { ReactNode, useState, useContext, useRef } from 'react';
-import { Avatar, Dialog, DialogBody } from '@material-tailwind/react';
+import React, {
+  ReactNode,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+} from 'react';
+import { Avatar, Dialog, DialogBody, Spinner } from '@material-tailwind/react';
 import { GrClose } from 'react-icons/gr';
 import popupImage from '../Images/postPopupImage.png';
 import Cropper from 'react-cropper';
@@ -7,6 +13,7 @@ import 'cropperjs/dist/cropper.css';
 import { MdOutlineRectangle, MdPermMedia } from 'react-icons/md';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { BsArrowLeftCircle, BsSquare } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
 
 interface Children {
   children: ReactNode;
@@ -26,6 +33,19 @@ export default function Create({ children }: Children) {
   const [toggleShare, setToggleShare] = useState<boolean>(false);
   const [selectHighlight, setSelectHighlight] = useState<number>(0);
   const [toggleInitialPage, setToggleInitialPage] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [successfulPage, setSuccessfulPage] = useState<boolean>(false);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!open) {
+      setToggleInitialPage(true);
+      setToggleShare(false);
+      setSuccessfulPage(false);
+      setGoNext(false);
+    }
+  }, [open]);
 
   // handle change functionality
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +79,10 @@ export default function Create({ children }: Children) {
   // after croping the image to move forward function
   const handleNext = () => {
     if (uploadReadyUrl) {
+      setToggleShare(true);
+      setToggleInitialPage(false);
+      setGoNext(false);
+      setSuccessfulPage(false)
       // Convert the cropped image to a Blob
       uploadReadyUrl.toBlob((blob: any) => {
         const formData = new FormData();
@@ -78,14 +102,18 @@ export default function Create({ children }: Children) {
           });
       });
     }
-    // You can use croppedImage URL for further processing or display
-    console.log('Cropped Image URL:', croppedImage);
   };
 
-  const moveNextFun = () => {
-    setToggleShare(true);
+
+  // share post function
+  const sharePost = () => {
+    if(!uploadedImage){
+      return
+    }
+    setToggleShare(false);
     setToggleInitialPage(false);
     setGoNext(false);
+    setSuccessfulPage(true);
   };
 
   return (
@@ -118,45 +146,29 @@ export default function Create({ children }: Children) {
         />
       </div>
       <Dialog open={open} handler={handleOpen} className='text-black' size='sm'>
-        {/* dialog header part from here to  */}
+        {/* =================================dialog header part from here to========================================  */}
         <div
-          className={`${
-            toggleInitialPage ? 'flex' : 'hidden'
-          } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
-          <h3 className='text-base text-center'>Create new post</h3>
-          <div onClick={handleOpen} className=' cursor-pointer'>
-            <GrClose />
-          </div>
-        </div>
-
-        {/* After uploading the image part here  */}
-        <div
-          className={`${
-            goNext ? 'flex' : 'hidden'
-          } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
-          <div>
+          className={`flex items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
+          {toggleInitialPage ? (
+            <h3 className='text-base text-center'>Create new post</h3>
+          ) : goNext ? (
             <BsArrowLeftCircle className='h-6 w-6' />
-          </div>
-          <div onClick={handleOpen} className=' cursor-pointer'>
-            <GrClose />
-          </div>
-        </div>
-
-        {/* here the final output where you can share the image  */}
-        <div
-          className={`${
-            toggleShare ? 'flex' : 'hidden'
-          } items-center justify-between px-5 py-3 border-b-[1px] border-solid border-gray-600 `}>
-          <div>
+          ) : toggleShare ? (
             <BsArrowLeftCircle className='h-6 w-6' />
-          </div>
+          ) : loading ? (
+            <p>sharing.......</p>
+          ) : (
+            <p className=' text-green-600'>shared</p>
+          )}
+
           <div onClick={handleOpen} className=' cursor-pointer'>
             <GrClose />
           </div>
         </div>
-        {/* till here  */}
 
-        {/* dialog body part from here to till end  */}
+        {/* =============================================till here=====================================================  */}
+
+        {/* =========================dialog body part from here to till end==============================  */}
         <DialogBody className='p-0'>
           <div
             className={`py-28 ${
@@ -250,7 +262,7 @@ export default function Create({ children }: Children) {
             </div>
             <button
               className=' bg-blue-500 rounded-lg text-white px-3 py-1 absolute right-5 bottom-5'
-              onClick={moveNextFun}>
+              onClick={handleNext}>
               next
             </button>
           </div>
@@ -260,7 +272,7 @@ export default function Create({ children }: Children) {
             className={`${
               toggleShare ? 'flex' : 'hidden'
             } items-center justify-center relative  h-[400px] flex-col`}>
-            <div className='h-[80px] flex items-start flex-col gap-1 w-full px-4'>
+            <div className='h-[80px] flex items-start flex-col gap-1 w-full px-4 py-1'>
               <div className='flex gap-2 w-full items-center'>
                 <Avatar
                   className='h-7 w-7'
@@ -273,7 +285,9 @@ export default function Create({ children }: Children) {
                   className='w-[100%] h-10 align-middle flex focus:outline-none border-solid border-b-[1px] border-gray-600 text-black'
                   placeholder='add your highlight (optional)'
                 />
-                <button className='absolute right-0 top-[5px]  bg-blue-500 rounded-lg text-white px-2 py-[1px]'>
+                <button
+                  className='absolute right-0 top-[5px]  bg-blue-500 rounded-lg text-white px-2 py-[1px]'
+                  onClick={sharePost}>
                   share
                 </button>
               </div>
@@ -282,6 +296,26 @@ export default function Create({ children }: Children) {
               src={croppedImage ? croppedImage : originalImage}
               className='object-cover max-h-[320px]'
             />
+          </div>
+
+          {/* loading part here after successfull make the post  */}
+          <div
+            className={`${
+              successfulPage ? 'flex' : 'hidden'
+            } items-center justify-center relative  h-[385px]`}>
+            {loading ? (
+              <div>
+                <Spinner className=' h-32 w-32 text-pink-400' />
+              </div>
+            ) : (
+              <div className='flex flex-col gap-2 justify-center items-center'>
+                <img
+                  src='https://i.pinimg.com/564x/1b/37/a3/1b37a31607ae30bf0fd3cf73f6009447.jpg'
+                  className='h-32 w-32'
+                />
+                <p className='text-xl'>Your post has been shared.</p>
+              </div>
+            )}
           </div>
         </DialogBody>
       </Dialog>
