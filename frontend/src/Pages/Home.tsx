@@ -9,9 +9,11 @@ import MdSidebar from '../Components/sidebar/MdSidebar';
 import { useSelector } from 'react-redux';
 import HomeSearch from '../Components/Home/HomeSearch';
 import SmSidebar from '../Components/sidebar/SmSidebar';
+import { Initial } from '../Types/reducerType';
 
 const Home = () => {
   // const ab = useSelector((store) => console.log(store));
+  // const posts = useSelector((store:Initial)=>store.post)
 
   return (
     <div className='w-full h-[100vh] flex  '>
@@ -31,22 +33,7 @@ const Home = () => {
           <div className='w-[100%]'>
             <Following />
             {/* all post come here  */}
-            <div className='flex flex-col gap-1 pt-5 md:pt-0 lg:pt-0 pb-12 '>
-              <div className='w-full md:w-[70%] lg:w-[70%] m-auto px-2'>
-                <Post />
-                <div className='px-2'>
-                  <Likeshare />
-                  <Comment />
-                </div>
-              </div>
-              <div className='w-full md:w-[70%] lg:w-[70%] m-auto  px-2'>
-                <Post />
-                <div className='px-2'>
-                  <Likeshare />
-                  <Comment />
-                </div>
-              </div>
-            </div>
+             <Post />
           </div>
         </div>
         {/* right side bar code  */}

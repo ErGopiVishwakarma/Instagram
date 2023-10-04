@@ -14,11 +14,10 @@ import { MdOutlineRectangle, MdPermMedia } from 'react-icons/md';
 import { BiCrop, BiImageAlt } from 'react-icons/bi';
 import { BsArrowLeftCircle, BsSquare } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewPost } from '../Redux/action';
 import { Initial } from '../Types/reducerType';
 import { PostType } from '../Types/otherType';
 import { AxiosResponse } from 'axios';
-import { UPDATEPOST } from '../Redux/actionType';
+import { ADDPOST } from '../Redux/actionType';
 
 interface Children {
   children: ReactNode;
@@ -130,7 +129,7 @@ export default function Create({ children }: Children) {
       .then((res: AxiosResponse<PostType>) => {
         const postData: any = res;
          setLoading(false)
-        dispatch({ type: UPDATEPOST, payload: postData });
+        dispatch({ type: ADDPOST, payload: postData });
       })
       .catch((err: any) => {
       setLoading(false);
