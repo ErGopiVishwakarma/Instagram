@@ -158,7 +158,7 @@ export default function Create({ children }: Children) {
         <Cropper
           ref={cropperRef}
           src={image}
-          style={{ width: '100%', height: '385px' }}
+          style={{ width: '100%' }}
           aspectRatio={1}
           zoomable={false}
           zoomOnWheel={false}
@@ -167,7 +167,7 @@ export default function Create({ children }: Children) {
           autoCropArea={1}
           movable={true}
           cropBoxMovable={true}
-          minContainerHeight={90}
+          minContainerHeight={100}
           minContainerWidth={100}
           guides={false}
           center={false}
