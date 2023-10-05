@@ -6,13 +6,12 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { Context, ContextType } from '../../Routes/ContextProvider';
 import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
 import { ChatType, MessageType } from '../../Types/otherType';
 import axios from 'axios';
 import { UPDATEMESSAGE } from '../../Redux/actionType';
 import io from 'socket.io-client';
 import { getAllMessages } from '../../Redux/action';
-
 
 const backEndPoint = 'http://localhost:8080';
 var socket: any, chatCompare: ChatType;
@@ -21,8 +20,8 @@ const MessagePage = () => {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
   const [newMessage, setNewMessage] = useState<string>('');
   const authUser: any = useSelector((store: Initial) => store.authUser);
-  const [messageRender,setMessageRender] = useState<boolean>(false)
-  const [socketConnected,setSocketConnected] = useState<boolean>(false)
+  const [messageRender, setMessageRender] = useState<boolean>(false);
+  const [socketConnected, setSocketConnected] = useState<boolean>(false);
   const dispatch = useDispatch();
   const token: string = useSelector(
     (store: Initial) => store.localStorageData.token,
@@ -37,8 +36,9 @@ const MessagePage = () => {
   useEffect(() => {
     socket = io(backEndPoint);
     socket.emit('userRoom', authUser);
-    socket.on('connected', () => {setSocketConnected(true)});
-
+    socket.on('connected', () => {
+      setSocketConnected(true);
+    });
   }, []);
 
   useEffect(() => {
@@ -48,18 +48,19 @@ const MessagePage = () => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on('recieveMessage', (returnMessage: MessageType) => {
+    socket.off('newMessage')
+    socket.once('newMessage', (returnMessage: MessageType) => {
       if (!chatCompare || value._id !== returnMessage.chatId) {
         //give notification
       } else {
         dispatch({ type: UPDATEMESSAGE, payload: returnMessage });
-        return
       }
+      // socket.on('recieveMessage', arguments.callee)
     });
-  });
+  },[messageRender]);
 
   // sending message code
-  const sendMessage = async () => {
+  const sendMessage = async () => { 
     if (newMessage) {
       try {
         const config = {
@@ -83,7 +84,7 @@ const MessagePage = () => {
         //  console.log(data,users)
         socket.emit('newMessage', { data, users });
         dispatch({ type: UPDATEMESSAGE, payload: data });
-        setMessageRender(prev=>!prev)
+        setMessageRender((prev) => !prev);
       } catch (error) {
         console.log(error);
         alert('ohh something went wrong');

@@ -82,7 +82,7 @@ const {selectedChat,setSelectedChat, chats, setChats} = useContext(Context) as C
   return (
     <>
       <div onClick={handleOpen}>{children}</div>
-      <Dialog open={open} handler={handleOpen} className='text-black'>
+      <Dialog open={open} handler={handleOpen} className='text-black' size='sm'>
         <div className='flex items-center justify-between px-5 py-5'>
           <h3 className='text-lg'>New message</h3>
           <div onClick={handleOpen} className=' cursor-pointer'>
