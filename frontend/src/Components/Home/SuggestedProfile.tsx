@@ -40,7 +40,7 @@ const SuggestedProfile = () => {
                   <div>
                     <p className='text-sm'>gpi vishaksdfkads</p>
                     <p className='text-xs text-[rgb(115, 115, 115)]'>
-                      kadkdfkdfk
+                      kadkdfkd
                     </p>
                   </div>
                 </div>
