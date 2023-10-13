@@ -12,7 +12,7 @@ import { PiTelegramLogoBold } from 'react-icons/pi';
 import { MdOutlineExplore } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { GrAddCircle } from 'react-icons/gr';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu } from 'react-icons/fi'
 import { BiSolidHome, BiSolidShoppingBagAlt } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 
