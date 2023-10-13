@@ -1,16 +1,16 @@
 import { Dispatch } from 'redux';
 import axios, { AxiosResponse } from 'axios';
 import { AuthUser} from '../Types/reducerType';
-import { ALLCHATS, ALLMESSAGE, ALLUSER, AUTH, AUTHUSER } from './actionType';
+import { ALLCHATS, ALLMESSAGE, ALLUSER, AUTH, AUTHUSER, GETALLPOST, LIKEPOST } from './actionType';
 import { Stored } from '../Types/fromLocalStorage';
-import { ChatType, MessageType } from '../Types/otherType';
+import { ChatType, MessageType, PostType } from '../Types/otherType';
 
 interface DispatchType {
   type: string;
   payload: boolean;
 }
 
-// verifying auth user function here
+// ===============================================verifying auth user function here===================================================
 export const authVerifiedFun = (dispatch: Dispatch<DispatchType>) => () => {
   var storedVerifiedAuthData: Stored | string;
   let storedAuthData = localStorage.getItem('xx12insta@123auth1t3ork0en');
@@ -31,7 +31,7 @@ export const authVerifiedFun = (dispatch: Dispatch<DispatchType>) => () => {
   }
 };
 
-// getting the data of auth user
+// =================================================getting the data of auth user=====================================================
 interface UserDispatchType {
   type: string;
   payload: AuthUser;
@@ -43,7 +43,7 @@ export const authUserdata =
       fetch(`http://localhost:8080/user/getuser/${id}`,{
         method:"GET",
         headers:{
-          'Content-Type':"applicatoin/json",
+          'Content-Type':"application/json",
           'Authorization':`Bearer ${token}`
         }
       }).then(ress=>ress.json()).then(
@@ -56,7 +56,7 @@ export const authUserdata =
   };
 
 
-//   login for getting all available user 
+//   ============================================login for getting all available user====================================================== 
 interface AllUserDispatchType {
     type: string;
     payload: AuthUser[];
@@ -68,7 +68,7 @@ export const getAllUser =
       fetch(`http://localhost:8080/user/getalluser`,{
         method:"GET",
         headers:{
-          'Content-Type':"applicatoin/json",
+          'Content-Type':"application/json",
           'Authorization':`Bearer ${token}`
         }
       }).then(ress=>ress.json()).then(
@@ -80,7 +80,7 @@ export const getAllUser =
   };
 
 
-  // gettting all data of chats 
+  // ==================================================gettting all data of chats==================================================== 
   interface AllChatDispatchType {
     type: string;
     payload: ChatType[];
@@ -92,7 +92,7 @@ export const getAllChat =
     fetch(`http://localhost:8080/chat/allchat`,{
       method:"GET",
       headers:{
-        'Content-Type':"applicatoin/json",
+        'Content-Type':"application/json",
         'Authorization':`Bearer ${token}`
       }
     }).then(ress=>ress.json()).then(
@@ -105,7 +105,7 @@ export const getAllChat =
 
 
 
-  // getting all messages 
+  //=========================================================== getting all messages ==============================================================
 
   interface AllMessageDispatchType {
     type: string;
@@ -123,7 +123,7 @@ export const getAllChat =
     fetch(`http://localhost:8080/message/message/${chatId}`,{
       method:"GET",
       headers:{
-        'Content-Type':"applicatoin/json",
+        'Content-Type':"application/json",
         'Authorization':`Bearer ${token}`
       }
     }).then(ress=>ress.json()).then(
@@ -134,3 +134,58 @@ export const getAllChat =
       }
     ).catch((err:any)=>console.log(err))
   };
+
+
+    // ===================================================add a post to server===============================================
+    interface NewPostDispatchType {
+      type: string;
+      payload: PostType[];
+    }
+  
+  export const getAllPost =
+    (token:string,dispatch: Dispatch<NewPostDispatchType>) => async () => {
+    
+     fetch(`http://localhost:8080/post`,{
+        method:"GET",
+        headers:{
+          'Content-Type':"application/json",
+          'Authorization':`Bearer ${token}`
+        },
+      }).then(ress=>ress.json()).then(
+        (res: AxiosResponse<PostType>) => {
+          const postData:any = res;
+          console.log(postData)
+          dispatch({ type: GETALLPOST, payload: postData });
+        }
+      ).catch((err:any)=>{
+        console.log(err)
+      })
+    };
+
+
+    // ================================================like the particular post ==============================================
+
+      interface LikePostDispatchType {
+        type: string;
+        payload: PostType;
+      }
+    
+    export const likePost =
+      (token:string,id:string,dispatch:Dispatch<LikePostDispatchType>)  => {
+      
+       fetch(`http://localhost:8080/post/like/${id}`,{
+          method:"PUT",
+          headers:{
+            'Content-Type':"application/json",
+            'Authorization':`Bearer ${token}`
+          },
+        }).then(ress=>ress.json()).then(
+          (res: AxiosResponse<PostType>) => {
+            const postData:any = res;
+            console.log(postData)
+            dispatch({ type: LIKEPOST, payload: postData });
+          }
+        ).catch((err:any)=>{
+          console.log(err)
+        })
+      };
