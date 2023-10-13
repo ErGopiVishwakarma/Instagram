@@ -51,7 +51,7 @@ const TabList = () => {
             </div>
             <div>
               <p>gopidsfiad</p>
-              <p>gopaisdfasodfi 2h.</p>
+              <p>gopaisdfasod 2h.</p>
             </div>
           </div>
         </TabPanel>
