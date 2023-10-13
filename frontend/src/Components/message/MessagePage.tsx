@@ -91,7 +91,7 @@ const MessagePage = () => {
       }
     } else {
       alert('please write something ..');
-      return;
+      return
     }
   };
 
