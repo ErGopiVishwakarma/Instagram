@@ -17,6 +17,7 @@ import { BiSolidHome, BiSolidShoppingBagAlt } from 'react-icons/bi';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import SearchDrawer from './SearchDrawer';
 import { NavLink } from 'react-router-dom';
+import Create from '../../Pages/Creates';
 
 export default function LgSidebar() {
   return (
@@ -47,7 +48,7 @@ export default function LgSidebar() {
           <ListItemPrefix>
             <MdOutlineExplore className='h-6 w-6' />
           </ListItemPrefix>
-        Explore
+          Explore
         </ListItem>
         <ListItem>
           <ListItemPrefix>
@@ -69,18 +70,22 @@ export default function LgSidebar() {
           </ListItemPrefix>
           Notification
         </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <GrAddCircle className='h-6 w-6' />
-          </ListItemPrefix>
-          Create
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Avatar className='h-6 w-6' />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
+        <Create>
+          <ListItem>
+            <ListItemPrefix>
+              <GrAddCircle className='h-6 w-6' />
+            </ListItemPrefix>
+            Create
+          </ListItem>
+        </Create>
+        <NavLink to='/profile'>
+          <ListItem>
+            <ListItemPrefix>
+              <Avatar className='h-6 w-6' src="https://i.pinimg.com/736x/98/1f/05/981f0513df876d4235b7ad3aa0c58817.jpg"/>
+            </ListItemPrefix>
+            Profile
+          </ListItem>
+        </NavLink>
         <ListItem>
           <ListItemPrefix>
             <FiMenu className='h-6 w-6' />
