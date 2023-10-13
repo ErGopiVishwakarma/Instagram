@@ -27,7 +27,7 @@ const {selectedChat,setSelectedChat, chats, setChats} = useContext(Context) as C
   
 // search user code
   const handleSearch = async (searchValue: string) => {
-    <Toaster position='top-center' reverseOrder={false} />;
+    <Toaster position='top-center' reverseOrder={false} />
     if (!searchData) {
       alert('fields are required');
       return;
