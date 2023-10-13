@@ -1,5 +1,5 @@
 import { Stored } from './fromLocalStorage';
-import { ChatType } from './otherType';
+import { ChatType, PostType } from './otherType';
 
 type Message = {};
 export type AuthUser = {
@@ -17,7 +17,7 @@ export interface Initial {
   authUser: AuthUser | {};
   chats:ChatType[] | [];
   user: AuthUser[] | [];
-  post: string[];
+  post: PostType[] | [];
   message: [];
 }
 
