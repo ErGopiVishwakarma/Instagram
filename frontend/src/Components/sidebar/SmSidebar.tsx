@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 const SmSidebar = () => {
   return (
-    <div className='w-full flex sm:flex md:hidden lg:hidden justify-evenly absolute bottom-0 z-10 bg-white border-t border-gray-400 '>
+    <div className='w-full flex sm:flex md:hidden lg:hidden justify-evenly absolute bottom-0 z-10 bg-white border-t border-gray-400'>
       <NavLink to='/'>
         <ListItem className='flex justify-center'>
           <BiSolidHome className='h-5 w-5' />
