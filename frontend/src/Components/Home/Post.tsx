@@ -4,11 +4,12 @@ import { useState } from 'react';
 import Likeshare from './Likeshare';
 import Comment from './Comment';
 import userPick from '../../Images/userimage.png';
-import DeleteMenu from '../../Pages/hey';
 import { NavLink } from 'react-router-dom';
 import HoverDetailPopup from './HoverDetailPopup';
+import PostThreeDotModal from './PostThreeDotModal';
+import { PostType } from '../../Types/otherType';
 
-const Post = ({ el }: any) => {
+const Post = ({el}:any) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const date: any = new Date();
@@ -28,7 +29,7 @@ const Post = ({ el }: any) => {
         style={{ fontFamily: 'Poppins, sans-serif' }}>
         {/* user post code here  */}
         <div className='flex items-center justify-between pb-2 relative'>
-          {/* navigate link here to go profile page  */}
+          {/* =======================================navigate link here to go profile page========================================  */}
           <NavLink to='/'>
             <div
               className='flex gap-2 items-center'
@@ -46,20 +47,19 @@ const Post = ({ el }: any) => {
               )}
             </div>
           </NavLink>
-          {/* popup box which will open when user hover on the image of name  */}
+          {/* =========================popup box which will open when user hover on the image of name===============================  */}
           <div className=' absolute left-2 top-12'>
             <HoverDetailPopup
               showPopup={showPopup}
               setShowPopup={setShowPopup}
             />
           </div>
-          {/* this is the right side three dot for show menu which will contain the lile delete follow etc  */}
-          <DeleteMenu>
-            <p className='text-3xl p-3 cursor-pointer'>...</p>
-          </DeleteMenu>
+          {/*==========================this is the right side three dot for show menu which will contain the lile delete follow etc========================  */}
+          <PostThreeDotModal el={el} />
+          
         </div>
 
-        {/* this is the post image  */}
+        {/*=================================== this is the post image=======================================  */}
         <div className='w-[100%] bg-black flex justify-center '>
           <img
             src={`http://localhost:8080/${el.postUrl}`}
@@ -68,10 +68,10 @@ const Post = ({ el }: any) => {
         </div>
       </div>
       <div>
-        {/* like functionality is here  */}
+        {/* ============================================like functionality is here==========================================  */}
         <Likeshare el={el} />
-        {/* comment part here  */}
-        <Comment />
+        {/*================================= comment part here ================================= */}
+        <Comment el={el} />
       </div>
     </div>
   );
