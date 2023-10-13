@@ -4,7 +4,7 @@ import { ChatType } from '../../Types/otherType';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { Context, ContextType } from '../../Routes/ContextProvider';
-import { useContext } from 'react';
+import { useContext } from 'react'
 
 const UserListCard = ({ el }: any) => {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
