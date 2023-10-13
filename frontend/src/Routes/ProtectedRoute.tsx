@@ -9,7 +9,8 @@ type Children = {
 
 const ProtectedRoute = ({children} : Children) => {
   const checkUserAuthenctication = useSelector((store:Initial)=>store.auth)
-  console.log(checkUserAuthenctication)
+  // console.log(checkUserAuthenctication)
+  
   return <div>{ checkUserAuthenctication? children : <Navigate to='/login' />} </div>
 }
 
