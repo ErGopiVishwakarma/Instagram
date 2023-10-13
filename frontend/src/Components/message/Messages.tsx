@@ -10,7 +10,7 @@ import { MessageType } from '../../Types/otherType';
 const Messages = () => {
   // const [message, setMessage] = useState<MessageType[]>([]);
   const { selectedChat, setSelectedChat} = useContext(Context) as ContextType;
-  const authUser: any = useSelector((store: Initial) => store.authUser);
+  const authUser: any = useSelector((store: Initial) => store.authUser)
   let data: any = selectedChat;
   const user =
     data && data.users[0]._id === authUser._id ? data.users[1] : data.users[0];
