@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import AllRoute from './Routes/AllRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { Initial } from './Types/reducerType';
-import { authUserdata, authVerifiedFun, getAllChat, getAllMessages, getAllUser } from './Redux/action';
-import SmSidebar from './Components/sidebar/SmSidebar';
+import { authUserdata, authVerifiedFun, getAllChat, getAllPost, getAllUser } from './Redux/action';
+
+
 
 
 function App() {
@@ -20,12 +21,17 @@ function App() {
 
   // get all chat 
   window.addEventListener('load',getAllChat(data.token,dispatch))
+
+  //get all post 
+  window.addEventListener('load',getAllPost(data.token,dispatch))
   
   const a = useSelector((store:Initial)=>console.log(store))
 
   return (
     <div className='relative'>
       <AllRoute />
+      {/* <ProfileMenu /> */}
+
     </div>
   );
 }
