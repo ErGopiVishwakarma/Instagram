@@ -10,9 +10,9 @@ interface HoverDetail {
 const HoverDetailPopup = ({showPopup,setShowPopup}:HoverDetail) => {
   return (
     <div
-    className={`h-[350px] w-[350px] border-2 border-teal-400 border-solid  bg-white  flex-col gap-3 ${
-      showPopup ? 'transition-all duration-700 ease-in-out opacity-100 flex visible delay-1000' : 'transition-all duration-700 ease-in-out opacity-0 hidden delay-500'
-    }`}
+    className={`h-[350px] w-[350px]  bg-white  flex-col gap-3 transition-all duration-2000 ease-in-out delay-500 ${
+      showPopup ? ' opacity-100 flex ' : 'opacity-0 hidden '
+    } rounded-md`} style={{boxShadow: 'rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px'}}
     onMouseOver={() => setShowPopup(true)}
     onMouseOut={() => setShowPopup(false)}>
     <div className='flex items-center gap-3 p-4'>
