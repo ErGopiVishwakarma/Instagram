@@ -1,6 +1,17 @@
 import { Reducer } from 'redux';
 import { Action, Initial } from '../Types/reducerType';
-import { ALLCHATS, ALLMESSAGE, ALLUSER, AUTH, AUTHUSER, UPDATEMESSAGE } from './actionType';
+import {
+  ADDPOST,
+  ALLCHATS,
+  ALLMESSAGE,
+  ALLUSER,
+  AUTH,
+  AUTHUSER,
+  DELETEPOST,
+  GETALLPOST,
+  LIKEPOST,
+  UPDATEMESSAGE,
+} from './actionType';
 import { Stored } from '../Types/fromLocalStorage';
 
 const storedData = localStorage.getItem('xx12insta@123auth1t3ork0en');
@@ -12,7 +23,7 @@ const initial: Initial = {
   authUser: {},
   chats: [],
   user: [],
-  post: ['sting'],
+  post: [],
   message: [],
 };
 
@@ -32,8 +43,22 @@ export const reducer: Reducer<Initial, Action> = (
       return { ...state, chats: payload };
     case ALLMESSAGE:
       return { ...state, message: payload };
-    case UPDATEMESSAGE :
-      return {...state, message :[...state.message,payload]}
+    case UPDATEMESSAGE:
+      return { ...state, message: [...state.message, payload] };
+    case GETALLPOST:
+      return { ...state, post: payload };
+    case ADDPOST:
+      return { ...state, post: [...state.post, payload] };
+    case LIKEPOST:
+      let filterData = state.post?.map((el) =>
+        el._id !== payload._id ? el : payload,
+      );
+      console.log(payload, filterData);
+      return { ...state, post: [...filterData] };
+    case DELETEPOST:
+      let deletedData = state.post?.filter((el) => el._id !== payload._id);
+      console.log(payload, deletedData);
+      return { ...state, post: [...deletedData] };
     default:
       return { ...state };
   }
