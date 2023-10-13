@@ -15,6 +15,9 @@ import { FiMenu } from 'react-icons/fi';
 import { BiSolidHome, BiSolidShoppingBagAlt } from 'react-icons/bi';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import { NavLink } from 'react-router-dom';
+import imgUrl from '../../Images/userimage.png';
+import Create from '../../Pages/Creates';
+import SearchDrawer from './SearchDrawer';
 
 export default function MdSidebar() {
   return (
@@ -30,9 +33,11 @@ export default function MdSidebar() {
             <BiSolidHome className='h-6 w-6' />
           </ListItem>
         </NavLink>
-        <ListItem className='flex justify-center'>
-          <BsSearch className='h-6 w-6' />
-        </ListItem>
+        <SearchDrawer>
+          <ListItem className='flex justify-center'>
+            <BsSearch className='h-6 w-6' />
+          </ListItem>
+        </SearchDrawer>
         <ListItem className='flex justify-center'>
           <MdOutlineExplore className='h-6 w-6' />
         </ListItem>
@@ -47,12 +52,16 @@ export default function MdSidebar() {
         <ListItem className='flex justify-center'>
           <AiOutlineHeart className='h-6 w-6' />
         </ListItem>
-        <ListItem className='flex justify-center'>
-          <GrAddCircle className='h-6 w-6' />
-        </ListItem>
-        <ListItem className='flex justify-center'>
-          <Avatar className='h-6 w-6' />
-        </ListItem>
+        <Create>
+          <ListItem className='flex justify-center'>
+            <GrAddCircle className='h-6 w-6' />
+          </ListItem>
+        </Create>
+        <NavLink to='/profile'>
+          <ListItem className='flex justify-center'>
+            <Avatar className='h-6 w-6' src={imgUrl} />
+          </ListItem>
+        </NavLink>
         <ListItem className='flex justify-center absolute bottom-0'>
           <FiMenu className='h-6 w-6' />
         </ListItem>
