@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineMessage } from 'react-icons/ai';
+import { AiOutlineMessage } from 'react-icons/ai'
 
 const NotSelectPage = () => {
   return (
