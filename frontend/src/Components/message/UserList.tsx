@@ -31,7 +31,7 @@ const UserList = () => {
         {/* <TabList /> */}
         {chatsData &&
           chatsData?.map((el, ind) => {
-            return <UserListCard el={el} key={ind} />;
+            return <UserListCard el={el} key={ind} />
           })}
       </div>
     </div>
