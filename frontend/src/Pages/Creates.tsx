@@ -116,7 +116,7 @@ export default function Create({ children }: Children) {
     setToggleInitialPage(false);
     setGoNext(false);
     setSuccessfulPage(true);
-    setLoading(true);
+    setLoading(true)
     fetch(`http://localhost:8080/post`, {
       method: 'POST',
       headers: {
