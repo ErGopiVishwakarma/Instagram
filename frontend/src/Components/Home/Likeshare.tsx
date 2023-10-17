@@ -9,22 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { likePost } from '../../Redux/action';
 import { LikeType } from '../../Types/otherType';
 
-
 const Likeshare = ({ el }: any) => {
   const authUser: any = useSelector((store: Initial) => store.authUser);
   const data = useSelector((store: Initial) => store.localStorageData);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const likeFunHandler = () => {
-    likePost(data.token,el._id,dispatch)
+    likePost(data.token, el._id, dispatch);
   };
 
   return (
     <div className='flex w-[100%] justify-between py-[2px]'>
       <div className='flex gap-3'>
         <Tooltip content='Like' placement='bottom' className='py-1 px-2'>
-          <div className=' cursor-pointer p-2 hover:bg-gray-300 rounded-full' onClick={likeFunHandler}>
-            {el.likes?.find((ele:LikeType)=>ele._id == authUser._id) ? (
+          <div
+            className=' cursor-pointer p-2 hover:bg-gray-300 rounded-full'
+            onClick={likeFunHandler}>
+            {el.likes?.find((ele: LikeType) => ele._id == authUser._id) ? (
               <BsHeartFill className='h-5 w-5 text-[#f00707]' />
             ) : (
               <BsHeart className='w-5 h-5' />
