@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const userSchema = mongoose.Schema({
     name:{type:String,default:'' , required:true},
     email:{type:String,default:'' , required:true},
+    highlights:{type:String,default:''},
     password:{type:String,default:'' , required:true},
     username:{type:String,default:'' , required:true},
     followers:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
