@@ -8,19 +8,52 @@ const cookieParser = require('cookie-parser')
 const chatRouter = require('./route/chatRoute')
 const socket = require('socket.io')
 require('dotenv').config()
+const multer = require('multer')
+const postRouter = require('./route/postRoute')
 
 const app = express()
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
+app.use(express.static('public'));
 app.use(cookieParser())
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {                          
     res.send('hii thihs is home page')
 })
-
+// for user route   
 app.use('/user', userRouter)
+
+// for chat route 
 app.use('/chat', authenticate, chatRouter)
+
+// for message route 
 app.use('/message', authenticate, messageRouter)
 
+//for post route
+app.use('/post', authenticate, postRouter)
+
+
+// uploading the image using multer 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        return cb(null, "./public")
+    },
+    filename: function (req, file, cb) {
+        return cb(null, `${Date.now()}_${file.originalname}`)
+    }
+})
+
+const upload = multer({ storage })
+
+app.post('/upload', upload.single('croppedImage'), (req, res) => {
+    // console.log(req.body)
+    // console.log(req.file)
+    res.status(200).send(JSON.stringify(req.file.filename))
+})
+
+// till here 
+
+
+// here is socket.io code and connection 
 const socketServer = app.listen(process.env.PORT, async () => {
     try {
         await connection
@@ -35,53 +68,26 @@ const io = socket(socketServer, {
     cors: 'http://localhost:3000'
 })
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
     console.log('connected to socket.io')
-    socket.on('userRoom',(authUserData)=>{
+    socket.on('userRoom', (authUserData) => {
         socket.join(authUserData._id)
         socket.emit('connected')
     })
 
-    socket.on('joinChatPage',(roomId)=>{
+    socket.on('joinChatPage', (roomId) => {
         socket.join(roomId)
     })
 
-    socket.on('newMessage',(getNewMessage)=>{
-        const {users,data} = getNewMessage
-        if(!users || !data) return;
-
-        users.forEach(user=>{
-            if(user._id == data.sender) return 
-            io.to(user._id).emit('recieveMessage',data)
-        })
+    socket.on('newMessage', (getNewMessage) => {
+        const { users, data } = getNewMessage
+        if (!users || !data) return;
+        socket.off('newMessage', arguments.callee)
+        users.forEach(user => {
+            if (user._id == data.sender) return
+            io.to(user._id).emit('newMessage', data)
+            socket.on('newMessage', arguments.callee)       
+        }) 
     })
 })
-
-// io.on('connection', (socket) => {
-//     console.log('connected to backend')
-//     socket.on('roomSetup', (userData) => {
-//         socket.join(userData._id)
-//         socket.emit('connected')
-//     })
-
-//     socket.on('joinChatPage', (roomId) => {
    
-//         if(currentRoomId){
-//             socket.leave(currentRoomId)
-//         }
-//         currentRoomId = roomId
-//         socket.join(roomId)
-//     })
-
-//     socket.on('newMessage', (getNewMessage) => {
-
-//         const { users, data } = getNewMessage;
-//         if (!users || !data) return;
-
-//         users.forEach(user => {
-//             if (user._id === data.sender) return;  // Skip sender
-//             io.to(user._id).emit('recieveMessage', data);
-//             return
-//         });
-//     })
-// })
