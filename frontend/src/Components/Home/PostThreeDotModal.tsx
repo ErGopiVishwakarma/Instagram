@@ -28,10 +28,10 @@ export default function PostThreeDotModal({ el }: any) {
               'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
           }}>
           {authUser._id === el.postedBy._id ? (
-            <DeletePostPopup id={el._id} fun = {setOpen} />
+            <DeletePostPopup id={el._id} />
           ) : (
             <div
-              className={` cursor-pointer text-[#f00707]`}
+              className={` ${divClass} cursor-pointer text-[#f00707]`}
               onClick={() => {
                 handleOpen();
               }}>
@@ -41,9 +41,7 @@ export default function PostThreeDotModal({ el }: any) {
 
           <div
             className={`${divClass} cursor-pointer text-[#f00707]`}
-            onClick={() => {
-              handleOpen();
-            }}>
+            onClick={handleOpen}>
             <p>Unfollow</p>
           </div>
           <div className={`${divClass} cursor-pointer text-black`}>
