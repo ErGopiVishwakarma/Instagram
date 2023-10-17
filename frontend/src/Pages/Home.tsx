@@ -12,20 +12,20 @@ import HomeSearch from '../Components/Home/HomeSearch';
 
 
 const Home = () => {
-  // const ab = useSelector((store) => console.log(store));
+ 
   const posts = useSelector((store:Initial)=>store.post)
 
   return (
-    <div className='w-full h-[100vh] flex  '>
+    <div className='w-full h-[100vh] flex relative '>
       <div>
         {/* search for base screen */}
         <HomeSearch />
       </div>
       {/* left side bar code  */}
-      <div className='hidden md:hidden lg:block z-50'>
+      <div className='hidden md:hidden lg:block relative z-50'>
         <LgSidebar />
       </div>
-      <div className='hidden lg:hidden md:block'>
+      <div className='hidden lg:hidden md:block relative z-50'>
         <MdSidebar />
       </div>
       {/* main div code of post  */}
@@ -37,7 +37,7 @@ const Home = () => {
             <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
               {
                 posts && posts.map((el,ind)=>{
-                  return <Post el={el} />
+                  return <Post el={el} key={ind} />
                 })
               }
               </div>
@@ -45,7 +45,7 @@ const Home = () => {
           </div>
         </div>
         {/* right side bar code  */}
-        <div className='w-[35%] pr-14 pl-10 hidden md:hidden lg:block py-2'>
+        <div className='w-[35%] pr-14 pl-10 hidden md:hidden lg:block py-2 '>
           <SuggestedProfile />
         </div>
       </div>
