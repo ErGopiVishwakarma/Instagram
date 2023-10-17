@@ -8,6 +8,7 @@ import {
   AUTH,
   AUTHUSER,
   DELETEPOST,
+  FOLLOW,
   GETALLPOST,
   LIKEPOST,
   UPDATEMESSAGE,
@@ -59,6 +60,15 @@ export const reducer: Reducer<Initial, Action> = (
       let deletedData = state.post?.filter((el) => el._id !== payload._id);
       console.log(payload, deletedData);
       return { ...state, post: [...deletedData] };
+    case FOLLOW:
+      let followData = state.user?.map((el) =>
+        el._id === payload[0]._id
+          ? payload[0]
+          : el._id === payload[1]._id
+          ? payload[1]
+          : el,
+      );
+      return { ...state, user: [...followData] };
     default:
       return { ...state };
   }
