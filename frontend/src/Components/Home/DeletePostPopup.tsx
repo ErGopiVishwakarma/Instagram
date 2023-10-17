@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DELETEPOST } from '../../Redux/actionType';
 
 interface HandleFun {
-  fun: React.Dispatch<React.SetStateAction<boolean>>;
   id:any
 }
 
-export default function DeletePostPopup({ id ,fun}: HandleFun) {
+export default function DeletePostPopup({ id }: HandleFun) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
   const data = useSelector((store: Initial) => store.localStorageData);
@@ -44,7 +43,6 @@ export default function DeletePostPopup({ id ,fun}: HandleFun) {
         className={`${divClass} cursor-pointer text-[#f00707]`}
         onClick={() => {
           handleOpenFun();
-          fun(prev=>!prev);
         }}>
         <p>Delete</p>
       </div>
