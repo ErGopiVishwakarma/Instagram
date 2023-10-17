@@ -5,9 +5,14 @@ import { GoVideo } from 'react-icons/go';
 import { GrAddCircle } from 'react-icons/gr';
 import { MdOutlineExplore } from 'react-icons/md';
 import { PiTelegramLogoBold } from 'react-icons/pi';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { Initial } from '../../Types/reducerType';
 
 const SmSidebar = () => {
+
+  const checkAuth: any = useSelector((store: Initial) => store.authUser);
+
   return (
     <div className='w-full flex sm:flex md:hidden lg:hidden justify-evenly absolute bottom-0 z-10 bg-white border-t border-gray-400'>
       <NavLink to='/'>
@@ -28,14 +33,14 @@ const SmSidebar = () => {
       <NavLink to=''>
         <ListItem className='flex justify-center'>
           <GrAddCircle className='h-5 w-5' />
-        </ListItem> 
+        </ListItem>
       </NavLink>
       <NavLink to='/message'>
         <ListItem className='flex justify-center'>
           <PiTelegramLogoBold className='h-5 w-5' />
         </ListItem>
       </NavLink>
-      <NavLink to=''>
+      <NavLink to={`/profle/${checkAuth._id}`}>
         <ListItem className='flex justify-center'>
           <Avatar
             src='https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80'
