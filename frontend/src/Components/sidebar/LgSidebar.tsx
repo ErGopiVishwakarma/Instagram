@@ -18,8 +18,13 @@ import { IconType } from 'react-icons/lib/esm/iconBase';
 import SearchDrawer from './SearchDrawer';
 import { NavLink } from 'react-router-dom';
 import Create from '../../Pages/Creates';
+import { useSelector } from 'react-redux';
+import { Initial } from '../../Types/reducerType';
 
 export default function LgSidebar() {
+
+  const checkAuth: any = useSelector((store: Initial) => store.authUser);
+
   return (
     <Card className='h-[calc(100vh)] w-full max-w-[15.5rem] rounded-none py-4 px-2 shadow-xl shadow-blue-gray-900/5 border-r border-gray-400 sticky top-0 '>
       <div className='mb-2 p-4'>
@@ -78,7 +83,7 @@ export default function LgSidebar() {
             Create
           </ListItem>
         </Create>
-        <NavLink to='/profile'>
+        <NavLink to={`/profile/${checkAuth._id}`}>
           <ListItem>
             <ListItemPrefix>
               <Avatar className='h-6 w-6' src="https://i.pinimg.com/736x/98/1f/05/981f0513df876d4235b7ad3aa0c58817.jpg"/>
