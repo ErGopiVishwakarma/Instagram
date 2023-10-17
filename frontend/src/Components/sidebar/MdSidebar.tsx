@@ -18,8 +18,13 @@ import { NavLink } from 'react-router-dom';
 import imgUrl from '../../Images/userimage.png';
 import Create from '../../Pages/Creates';
 import SearchDrawer from './SearchDrawer';
+import { useSelector } from 'react-redux';
+import { Initial } from '../../Types/reducerType';
 
 export default function MdSidebar() {
+
+  const checkAuth: any = useSelector((store: Initial) => store.authUser);
+
   return (
     <Card className='h-[calc(100vh)] max-w-[4.5rem] rounded-none py-4 px-2 border-solid border-1 border-r border-gray-500 box-border align-middle'>
       <div className='mb-2 p-4 flex justify-center'>
@@ -27,7 +32,7 @@ export default function MdSidebar() {
           <BsInstagram className='h-6 w-6' />
         </Typography>
       </div>
-      <List className='box-border min-w-0 w-full h-full p-0 align-middle gap-1 relative'>
+      <List className='box-border min-w-0 w-full h-full p-0 align-middle gap-1 relative '>
         <NavLink to='/'>
           <ListItem className='flex justify-center'>
             <BiSolidHome className='h-6 w-6' />
@@ -57,7 +62,7 @@ export default function MdSidebar() {
             <GrAddCircle className='h-6 w-6' />
           </ListItem>
         </Create>
-        <NavLink to='/profile'>
+        <NavLink to={`/profile/${checkAuth._id}`}>
           <ListItem className='flex justify-center'>
             <Avatar className='h-6 w-6' src={imgUrl} />
           </ListItem>
