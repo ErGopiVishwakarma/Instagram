@@ -49,7 +49,7 @@ export const authUserdata =
       }).then(ress=>ress.json()).then(
         (res: AxiosResponse<ChatType>) => {
           const chatsData:any = res;
-          console.log('hii',res)
+          // console.log('hii',res)
           dispatch({ type: AUTHUSER, payload: chatsData });
         }
       ).catch((err:any)=>console.log(err))
@@ -154,7 +154,7 @@ export const getAllChat =
       }).then(ress=>ress.json()).then(
         (res: AxiosResponse<PostType>) => {
           const postData:any = res;
-          console.log(postData)
+          // console.log(postData)
           dispatch({ type: GETALLPOST, payload: postData });
         }
       ).catch((err:any)=>{
@@ -182,10 +182,13 @@ export const getAllChat =
         }).then(ress=>ress.json()).then(
           (res: AxiosResponse<PostType>) => {
             const postData:any = res;
-            console.log(postData)
+            // console.log(postData)
             dispatch({ type: LIKEPOST, payload: postData });
           }
         ).catch((err:any)=>{
           console.log(err)
         })
       };
+
+
+
