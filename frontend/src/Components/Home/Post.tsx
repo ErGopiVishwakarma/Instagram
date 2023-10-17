@@ -8,10 +8,14 @@ import { NavLink } from 'react-router-dom';
 import HoverDetailPopup from './HoverDetailPopup';
 import PostThreeDotModal from './PostThreeDotModal';
 import { PostType } from '../../Types/otherType';
+import { AuthUser, Initial } from '../../Types/reducerType';
+import { useSelector } from 'react-redux';
+import { AxiosResponse } from 'axios';
 
 const Post = ({el}:any) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
-
+  const [userPostData, setUserPostData] = useState<PostType[] | []>();
+  const data = useSelector((store: Initial) => store.localStorageData);
   const date: any = new Date();
   const postDate: any = new Date(`${el.createdAt}`);
   let hour = Math.floor((date - postDate) / 1000 / 3600);
@@ -19,6 +23,27 @@ const Post = ({el}:any) => {
   let month = postDate
     .toLocaleString('default', { month: 'long' })
     .substring(0, 3);
+
+
+  
+    const getUserPost = (id: string | undefined, token: string) => {
+      fetch(`http://localhost:8080/post/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((ress) => ress.json())
+        .then((res: AxiosResponse<PostType>) => {
+          const postData: any = res;
+          console.log(postData);
+          setUserPostData(postData);
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    };
 
   return (
     <div
@@ -30,10 +55,13 @@ const Post = ({el}:any) => {
         {/* user post code here  */}
         <div className='flex items-center justify-between pb-2 relative'>
           {/* =======================================navigate link here to go profile page========================================  */}
-          <NavLink to='/'>
+          <NavLink to={`/profile/${el.postedBy._id}`}>
             <div
               className='flex gap-2 items-center'
-              onMouseOver={() => setShowPopup(true)}
+              onMouseOver={() =>{
+                getUserPost(el.postedBy._id,data.token)
+                 setShowPopup(true)
+                }}
               onMouseOut={() => setShowPopup(false)}>
               <Avatar
                 src={el.postedBy?.profile ? el.postedBy?.profile : userPick}
@@ -52,6 +80,8 @@ const Post = ({el}:any) => {
             <HoverDetailPopup
               showPopup={showPopup}
               setShowPopup={setShowPopup}
+              userPostData={userPostData as PostType[]}
+              authUser = {el?.postedBy as AuthUser}
             />
           </div>
           {/*==========================this is the right side three dot for show menu which will contain the lile delete follow etc========================  */}
