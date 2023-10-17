@@ -9,3 +9,4 @@ export const GETALLPOST : string = "GETALLPOST";
 export const DELETEPOST : string = "DELETEPOST"
 export const LIKEPOST : string = "LIKEPOST"
 export const COMMENTPOST : string = "COMMENTPOST"
+export const FOLLOW : string = "FOLLOW"
