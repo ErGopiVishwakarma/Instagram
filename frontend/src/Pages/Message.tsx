@@ -20,13 +20,13 @@ const Message = () => {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
 
   return (
-    <div className='w-full h-[100vh] flex '>
+    <div className='w-full h-[100vh] flex relative '>
       {/* left side bar code  */}
-      <div className='flex relative'>
-        <div className='hidden md:block relative z-50'>
+      <div className='flex '>
+        <div className='hidden md:block '>
           <MdSidebar />
         </div>
-        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block relative z-20`}>
+        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block `}>
           <UserList />
         </div>
       </div>
