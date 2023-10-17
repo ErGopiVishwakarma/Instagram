@@ -92,7 +92,7 @@ userRouter.get('/search', authenticate, async (req, res) => {
     } : {};
 
     try {
-        const user = await UserModel.find(searchData).find({ _id: { $ne: req.user._id } }).select('-password -email')
+        const user = await UserModel.find(searchData).find({ _id: { $ne: req.user._id } }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
         res.status(200).send(user)
     } catch (error) {
         res.status(400).send({ error })
@@ -105,7 +105,7 @@ userRouter.get('/search', authenticate, async (req, res) => {
 userRouter.get('/getuser/:id', authenticate, async (req, res) => {
     const { id } = req.params
     try {
-        const user = await UserModel.findById(id).select('-password -email')
+        const user = await UserModel.findById(id).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
         res.status(200).send(user)
     } catch (error) {
         res.status(400).send({ error })
@@ -116,11 +116,69 @@ userRouter.get('/getuser/:id', authenticate, async (req, res) => {
 userRouter.get('/getalluser', authenticate, async (req, res) => {
     // { _id: { $ne: req.user._id } }
     try {
-        const user = await UserModel.find().select('-password -email')
+        let user = await UserModel.find().select('-password -email')
+       
+        for (let i = 0; i < user.length; i++) {
+            let index = Math.floor(Math.random(0) * user.length)
+              if(index<0){
+                index=0
+              }
+            [user[i],user[index]] = [user[index],user[i]]
+        }
         res.status(200).send(user)
     } catch (error) {
         res.status(400).send({ error })
     }
+})
+
+userRouter.get('/userprofile/:id', authenticate, async (req, res) => {
+    const { id } = req.params
+    if (id) {
+        try {
+            const user = await UserModel.findById(id).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
+            res.status(200).send(user)
+        } catch (error) {
+            res.status(400).send({ error })
+        }
+    } else {
+        res.status(400).send({ error: 'invailid request route' })
+    }
+
+})
+
+
+// follow and unfollow logic is here 
+
+userRouter.put('/follow', authenticate, async (req, res) => {
+    UserModel.findByIdAndUpdate(req.body.followerId, {
+        $push: { followers: req.user._id }
+    }, { new: true }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile').then(result => {
+        UserModel.findByIdAndUpdate(req.user._id, {
+            $push: { followings: req.body.followerId }
+        }, { new: true }).select('-password -email').then(value => {
+            res.status(200).send(result)
+        }).catch(error => {
+            res.status(400).send({ error })
+        })
+    }).catch(error => {
+        res.status(400).send({ error })
+    })
+})
+
+userRouter.put('/unfollow', authenticate, async (req, res) => {
+    UserModel.findByIdAndUpdate(req.body.unfollowId, {
+        $pull: { followers: req.user._id }
+    }, { new: true }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile').then(result => {
+        UserModel.findByIdAndUpdate(req.user._id, {
+            $pull: { followings: req.body.unfollowId }
+        }, { new: true }).select('-password -email').then(value => {
+            res.status(200).send(result)
+        }).catch(error => {
+            res.status(400).send({ error })
+        })
+    }).catch(error => {
+        res.status(400).send({ error })
+    })
 })
 
 
