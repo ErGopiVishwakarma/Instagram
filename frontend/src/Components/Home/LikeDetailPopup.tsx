@@ -29,10 +29,10 @@ export default function LikeDetailPopup({ el }: any) {
       <Dialog open={open} handler={handleOpenFun} size='xs'>
         <div
           className={`flex items-center justify-end px-5 py-5 border-b-[1px] border-solid border-gray-600 relative `}>
-          <h2 className='text-base text-center absolute left-0 right-0 font-bold'>
-            Likes
-          </h2>
-          <div onClick={handleOpenFun} className=' cursor-pointer'>
+          <div className='text-base text-center absolute left-0 right-0 font-bold'>
+            <h2>Likes</h2>
+          </div>
+          <div onClick={handleOpenFun} className=' cursor-pointer absolute'>
             <GrClose />
           </div>
         </div>
@@ -59,7 +59,9 @@ export default function LikeDetailPopup({ el }: any) {
                       </p>
                     </div>
                   </div>
-                  <button className='px-5 py-1 bg-[rgb(33,163,247)] text-white rounded-full'>Follow</button>
+                  <button className='px-5 py-1 bg-[rgb(33,163,247)] text-white rounded-full'>
+                    Follow
+                  </button>
                 </div>
               );
             })
