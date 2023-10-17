@@ -4,9 +4,15 @@ const postRouter = require('express').Router()
 
 // adding a post to database 
 postRouter.post('/', async (req, res) => {
+    const { postUrl, size, highlights } = req.body
     try {
-        const userPost = new PostModel({ ...req.body, postedBy: req.user._id })
-        await userPost.save()
+        const userPost = new PostModel({ postUrl, size, highlights, postedBy: req.user._id })
+        await userPost.save().populate('postedBy', '-email -password').populate('likes', 'name username _id profile').populate({
+            path: 'comments.like comments.commentedBy',
+            model: 'user',
+            select: 'name username profile _id'
+        })
+        console.log(userPost)
         res.status(200).send(userPost)
     } catch (error) {
         res.status(400).send({ error })
@@ -16,7 +22,26 @@ postRouter.post('/', async (req, res) => {
 // getting all post from database 
 postRouter.get('/', async (req, res) => {
     try {
-        const data = await PostModel.find()
+        const data = await PostModel.find().populate('postedBy', '-email -password').populate('likes', 'name username _id profile').populate({
+            path: 'comments.like comments.commentedBy',
+            model: 'user',
+            select: 'name username profile _id'
+        })
+        res.status(200).send(data)
+    } catch (error) {
+        res.status(400).send({ error })
+    }
+})
+
+// getting particular user posts 
+postRouter.get('/:id', async (req, res) => {
+    const {id} = req.params
+    try {
+        const data = await PostModel.find({postedBy:id}).populate('postedBy', '-email -password').populate('likes', 'name username _id profile').populate({
+            path: 'comments.like comments.commentedBy',
+            model: 'user',
+            select: 'name username profile _id'
+        })
         res.status(200).send(data)
     } catch (error) {
         res.status(400).send({ error })
@@ -28,7 +53,7 @@ postRouter.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
         const data = await PostModel.findByIdAndDelete(id, { new: true })
-        res.status(200).send('post deleted successfully.')
+        res.status(200).send(data)
     } catch (error) {
         res.status(400).send({ error })
     }
@@ -44,6 +69,10 @@ postRouter.put('/like/:id', async (req, res) => {
                 $pull: { likes: req.user._id }
             }, {
                 new: true
+            }).populate('likes', 'name username _id profile').populate({
+                path: 'comments.like comments.commentedBy',
+                model: 'user',
+                select: 'name username profile _id'
             }).then(result => {
                 res.status(200).send(result)
             }).catch(err => {
@@ -54,7 +83,7 @@ postRouter.put('/like/:id', async (req, res) => {
                 $push: { likes: req.user._id }
             }, {
                 new: true
-            }).then(result => {
+            }).populate('likes', 'name username _id profile').then(result => {
                 res.status(201).send(result)
             }).catch(err => {
                 res.status(400).send({ error: err })
@@ -71,10 +100,14 @@ postRouter.put('/comment/:id', async (req, res) => {
     const { id } = req.params
     try {
         PostModel.findByIdAndUpdate(id, {
-            $push: { comments: { ...req.body, postedBy: req.user._id } }
+            $push: { comments: { ...req.body, commentedBy: req.user._id } }
         }, {
             new: true
-        }).populate("comments.postedBy").then(result => {
+        }).populate('postedBy', '-email -password').populate('likes', 'name username _id profile').populate({
+            path: 'comments.like comments.commentedBy',
+            model: 'user',
+            select: 'name username profile _id'
+        }).then(result => {
             res.status(200).send(result)
         }).catch(err => {
             res.status(400).send({ error: err })
@@ -107,32 +140,34 @@ postRouter.put('/comment/:id', async (req, res) => {
 
 
 // detecting and adding the user view of a particular post 
-postRouter.put('/view/:id', async (req, res) => {
-    const { id } = req.params
-    try {
-        const data = await PostModel.findById(id)
-        if (data.views.includes(req.user._id)) {
-            PostModel.findByIdAndUpdate(id, {
-                $pull: { views: req.user._id }
-            }, {
-                new: true
-            }).then(result => {
-                res.status(200).send(result)
-            }).catch(err => {
-                res.status(400).send({ error: err })
-            })
-        } else {
-            PostModel.findByIdAndUpdate(id, {
-                $push: { views: req.user._id }
-            }, {
-                new: true
-            }).then(result => {
-                res.status(201).send(result)
-            }).catch(err => {
-                res.status(400).send({ error: err })
-            })
-        }
-    } catch (error) {
-        res.status(400).send({ error })
-    }
-})
+// postRouter.put('/view/:id', async (req, res) => {
+//     const { id } = req.params
+//     try {
+//         const data = await PostModel.findById(id)
+//         if (data.views.includes(req.user._id)) {
+//             PostModel.findByIdAndUpdate(id, {
+//                 $pull: { views: req.user._id }
+//             }, {
+//                 new: true
+//             }).then(result => {
+//                 res.status(200).send(result)
+//             }).catch(err => {
+//                 res.status(400).send({ error: err })
+//             })
+//         } else {
+//             PostModel.findByIdAndUpdate(id, {
+//                 $push: { views: req.user._id }
+//             }, {
+//                 new: true
+//             }).then(result => {
+//                 res.status(201).send(result)
+//             }).catch(err => {
+//                 res.status(400).send({ error: err })
+//             })
+//         }
+//     } catch (error) {
+//         res.status(400).send({ error })
+//     }
+// })
+
+module.exports = postRouter
