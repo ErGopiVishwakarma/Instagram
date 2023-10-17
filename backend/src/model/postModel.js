@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
-       post:{type:String,default:''},
+       postUrl:{type:String,default:''},
+       size:{type:Number,default:0},
        highlights:{type:String,default:''},
        postedBy:{type:mongoose.Schema.Types.ObjectId,ref:'user'},
        likes:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
        views:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
        comments:[{
         text:{type:String,default:''},
-        likes:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
-        replys:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
+        like:[{type:mongoose.Schema.Types.ObjectId,ref:'user'}],
         commentedBy:{type:mongoose.Schema.Types.ObjectId,ref:'user'}
        }]
 },{
