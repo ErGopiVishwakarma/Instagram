@@ -5,8 +5,60 @@ import LgSidebar from '../Components/sidebar/LgSidebar';
 import MdSidebar from '../Components/sidebar/MdSidebar';
 import ProfilePost from '../Components/profile/ProfilePost';
 import { BsPlus } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { AuthUser, Initial } from '../Types/reducerType';
+import { PostType } from '../Types/otherType';
+import { AxiosResponse } from 'axios';
 
 export default function Profile() {
+  const { id } = useParams();
+  const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
+  const [userData, setUserData] = useState<AuthUser>();
+  const [userPostData, setUserPostData] = useState<PostType[] | []>();
+  const data = useSelector((store: Initial) => store.localStorageData);
+
+  const getUserProfile = (id:string | undefined,token:string) =>{
+    fetch(`http://localhost:8080/user/userprofile/${id}`,{
+      method:"GET",
+      headers:{
+        'Content-Type':"application/json",
+        'Authorization':`Bearer ${token}`
+      },
+    }).then(ress=>ress.json()).then(
+      (res: AxiosResponse<PostType>) => {
+        const userData:any = res;
+        // console.log(userData)
+        setUserData(userData)
+      }
+    ).catch((err:any)=>{
+      console.log(err)
+    })
+  }
+
+  
+  const getUserPost= (id:string | undefined,token:string) =>{
+    fetch(`http://localhost:8080/post/${id}`,{
+      method:"GET",
+      headers:{
+        'Content-Type':"application/json",
+        'Authorization':`Bearer ${token}`
+      },
+    }).then(ress=>ress.json()).then(
+      (res: AxiosResponse<PostType>) => {
+        const postData:any = res;
+        // console.log(postData)
+        setUserPostData(postData)
+      }
+    ).catch((err:any)=>{
+      console.log(err)
+    })
+  }
+
+  useEffect(()=>{
+    getUserProfile(id,data.token)
+    getUserPost(id,data.token)
+    },[id])
+
   return (
     <div className='w-full flex'>
       {/* left part  */}
@@ -22,17 +74,21 @@ export default function Profile() {
       <div className='w-full h-[100vh] px-[87px] pt-10 pb-12 overflow-y-auto '>
         {/* profile part  */}
         <div className='pl-[70px]'>
-          <HeaderFile />
+          <HeaderFile userData={userData as AuthUser} userPostData={userPostData as PostType[]} setUserData={setUserData} />
         </div>
         {/* add new + sign part  */}
-        <div className='flex p-10 w-full'>
-          <div className='flex flex-col gap-3 items-center cursor-pointer'>
-            <div className='h-[80px] w-[80px] border-solid border-[1px] border-gray-400 rounded-full flex justify-center items-center bg-[#f0eeee]'>
-              <BsPlus className='h-16 w-16 text-[#b7b6b6]' />
+        {checkAuth?._id === id ? (
+          <div className='flex p-10 w-full'>
+            <div className='flex flex-col gap-3 items-center cursor-pointer'>
+              <div className='h-[80px] w-[80px] border-solid border-[1px] border-gray-400 rounded-full flex justify-center items-center bg-[#f0eeee]'>
+                <BsPlus className='h-16 w-16 text-[#b7b6b6]' />
+              </div>
+              <p className='text-xs'>New</p>
             </div>
-            <p className='text-xs'>New</p>
           </div>
-        </div>
+        ) : (
+          <div className='flex p-10 w-full'></div>
+        )}
         {/* post part  */}
         <div>
           <ProfilePost />
@@ -40,22 +96,4 @@ export default function Profile() {
       </div>
     </div>
   );
-}
-
-{
-  /* <div className='bg-gray-background'>
-  <button className='bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-red-500 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 transform hover:scale-110'>
-    Animated Button
-  </button>
-  <div
-    className='w-16 h-16 border-8 border-blue-500 border-solid rounded-full animate-spin'
-    style={{
-      borderWidth: '10px',
-      width: '50px',
-      height: '50px',
-      borderImage: 'conic-gradient(from 0deg, #3498db, #e74c3c, #2ecc71)',
-    }}></div>
-
-  <div className='mx-auto max-w-screen-lg'></div>
-</div>; */
 }
