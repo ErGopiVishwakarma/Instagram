@@ -25,7 +25,7 @@ function App() {
   //get all post 
   window.addEventListener('load',getAllPost(data.token,dispatch))
   
-  const a = useSelector((store:Initial)=>console.log(store))
+  // const a = useSelector((store:Initial)=>console.log(store))
 
   return (
     <div className='relative'>

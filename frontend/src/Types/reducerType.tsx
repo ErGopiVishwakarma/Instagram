@@ -1,13 +1,16 @@
 import { Stored } from './fromLocalStorage';
-import { ChatType, PostType } from './otherType';
+import { ChatType, LikeType, PostType } from './otherType';
 
 type Message = {};
+
+
+
 export type AuthUser = {
-  _id: string;
+  "_id": string;
   name: string;
   username: string;
-  followers: string[];
-  followings: string[];
+  followers: [LikeType] | [];
+  followings: [LikeType] | [];
   profile: string;
   number: string;
 };
