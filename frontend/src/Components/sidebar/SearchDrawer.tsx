@@ -32,13 +32,13 @@ export default function SearchDrawer({ children }: Children) {
       <Drawer
         open={open}
         onClose={closeDrawer}
-        className={`flex transition-all relative ${
+        className={`flex transition-all ${
           open
             ? 'duration-1000 ease-in-out transform translate-x-0'
             : 'duration-600 ease-in-out transform -translate-x-full'
         }`}
         size={450}>
-        <Card className='h-[calc(100vh)] max-w-[4.5rem] rounded-none py-4 px-2 border-solid border-1 border-r border-gray-500 box-border align-middle relative z-40'>
+        <Card className='h-[calc(100vh)] max-w-[4.5rem] rounded-none py-4 px-2 border-solid border-1 border-r border-gray-500 box-border align-middle'>
           <div className='mb-2 p-4 flex justify-center'>
             <Typography variant='h5' color='blue-gray'>
               <BsInstagram className='h-6 w-6' />
