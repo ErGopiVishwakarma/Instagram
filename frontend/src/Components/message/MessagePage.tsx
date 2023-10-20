@@ -13,7 +13,7 @@ import { UPDATEMESSAGE } from '../../Redux/actionType';
 import io from 'socket.io-client';
 import { getAllMessages } from '../../Redux/action';
 
-const backEndPoint = 'http://localhost:8080';
+const backEndPoint = `${process.env.REACT_APP_URL}`;
 var socket: any, chatCompare: ChatType;
 
 const MessagePage = () => {
@@ -72,7 +72,7 @@ const MessagePage = () => {
 
         setNewMessage('');
         const { data } = await axios.post(
-          `http://localhost:8080/message`,
+          `${process.env.REACT_APP_URL}/message`,
           {
             content: newMessage,
             chatId: value._id,
