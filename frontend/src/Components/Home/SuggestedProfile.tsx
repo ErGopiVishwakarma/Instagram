@@ -39,8 +39,8 @@ const SuggestedProfile = () => {
           <p className='text-sm'>Suggested for you</p>
           <p className='text-xs'>See All</p>
         </div>
-        {suggestedUser &&
-          suggestedUser.map((el, ind) => {
+        {suggestedUser.length > 0 ?
+          suggestedUser?.map((el, ind) => {
             return (
               <HoverPopupForSuggestProfile
                 el={el as AuthUser}
@@ -48,7 +48,8 @@ const SuggestedProfile = () => {
                 key={ind}
               />
             );
-          })}
+          }):<></>
+        }
       </div>
       <div className=' pt-10'>
         <a>
