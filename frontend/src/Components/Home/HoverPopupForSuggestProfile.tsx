@@ -25,7 +25,7 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
   const dispatch = useDispatch();
 
   const getUserPost = (id: string | undefined, token: string) => {
-    fetch(`http://localhost:8080/post/${id}`, {
+    fetch(`${process.env.REACT_APP_URL}/post/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
       followerId: el?._id,
     };
     setLoading(true);
-    fetch(`http://localhost:8080/user/follow`, {
+    fetch(`${process.env.REACT_APP_URL}/user/follow`, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
       unfollowId: el?._id,
     };
     setLoading(true);
-    fetch(`http://localhost:8080/user/unfollow`, {
+    fetch(`${process.env.REACT_APP_URL}/user/unfollow`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
             {userPostData?.slice(0, 3).map((el) => {
               return (
                 <img
-                  src={`http://localhost:8080/${el?.postUrl}`}
+                  src={`${process.env.REACT_APP_URL}/${el?.postUrl}`}
                   className=' h-[140px] w-full'
                 />
               );
