@@ -56,7 +56,7 @@ const HoverDetailPopup = ({
           {userPostData.slice(0, 3).map((el) => {
             return (
               <img
-                src={`http://localhost:8080/${el?.postUrl}`}
+                src={`${process.env.REACT_APP_URL}/${el?.postUrl}`}
                 className=' h-[140px] w-full' key={el?._id}
               />
             );
