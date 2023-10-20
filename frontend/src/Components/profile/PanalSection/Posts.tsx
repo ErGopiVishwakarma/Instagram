@@ -13,7 +13,7 @@ const Posts = ({el}:PostTypes) => {
   return (
     <div className='relative cursor-pointer' onMouseOver={()=>setShow(true)} onMouseOut={()=>setShow(false)}>
       <img
-        src={`http://localhost:8080/${el?.postUrl}`}
+        src={`${process.env.REACT_APP_URL}/${el?.postUrl}`}
         className=' h-full w-full'
       />
       <div className={`h-full w-full absolute top-0 hover:bg-[#0a0a0a4d] z-20 ${show?'flex':'hidden'} justify-center items-center gap-3 cursor-pointer`}>

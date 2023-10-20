@@ -40,7 +40,7 @@ interface UserDispatchType {
 export const authUserdata =
   (id: string,token:string, dispatch: Dispatch<UserDispatchType>) => async () => {
   
-      fetch(`http://localhost:8080/user/getuser/${id}`,{
+      fetch(`${process.env.REACT_APP_URL}/user/getuser/${id}`,{
         method:"GET",
         headers:{
           'Content-Type':"application/json",
@@ -65,7 +65,7 @@ interface AllUserDispatchType {
 export const getAllUser =
   (token:string,dispatch: Dispatch<AllUserDispatchType>) => async () => {
   
-      fetch(`http://localhost:8080/user/getalluser`,{
+      fetch(`${process.env.REACT_APP_URL}/user/getalluser`,{
         method:"GET",
         headers:{
           'Content-Type':"application/json",
@@ -89,7 +89,7 @@ export const getAllUser =
 export const getAllChat =
   (token:string,dispatch: Dispatch<AllChatDispatchType>) => async () => {
   
-    fetch(`http://localhost:8080/chat/allchat`,{
+    fetch(`${process.env.REACT_APP_URL}/chat/allchat`,{
       method:"GET",
       headers:{
         'Content-Type':"application/json",
@@ -120,7 +120,7 @@ export const getAllChat =
       return 
     }
   
-    fetch(`http://localhost:8080/message/message/${chatId}`,{
+    fetch(`${process.env.REACT_APP_URL}/message/message/${chatId}`,{
       method:"GET",
       headers:{
         'Content-Type':"application/json",
@@ -145,7 +145,7 @@ export const getAllChat =
   export const getAllPost =
     (token:string,dispatch: Dispatch<NewPostDispatchType>) => async () => {
     
-     fetch(`http://localhost:8080/post`,{
+     fetch(`${process.env.REACT_APP_URL}/post`,{
         method:"GET",
         headers:{
           'Content-Type':"application/json",
@@ -173,7 +173,7 @@ export const getAllChat =
     export const likePost =
       (token:string,id:string,dispatch:Dispatch<LikePostDispatchType>)  => {
       
-       fetch(`http://localhost:8080/post/like/${id}`,{
+       fetch(`${process.env.REACT_APP_URL}/post/like/${id}`,{
           method:"PUT",
           headers:{
             'Content-Type':"application/json",

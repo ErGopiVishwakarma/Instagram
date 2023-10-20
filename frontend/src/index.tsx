@@ -9,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from './Redux/store';
 import ContextProvider from './Routes/ContextProvider';
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );

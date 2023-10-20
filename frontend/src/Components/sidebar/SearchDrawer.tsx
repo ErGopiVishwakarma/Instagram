@@ -48,7 +48,7 @@ export default function SearchDrawer({ children }: Children) {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/user/search?search=${text}`,
+        `${process.env.REACT_APP_URL}/user/search?search=${text}`,
         {
           method: 'GET',
           headers: {
