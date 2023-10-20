@@ -14,12 +14,6 @@ import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { PostType } from '../../Types/otherType';
 
-let arr = [
-  'https://i.pinimg.com/222x/cb/da/61/cbda61d1d510f2379cb3880b6c59044a.jpg',
-  'https://i.pinimg.com/222x/cb/da/61/cbda61d1d510f2379cb3880b6c59044a.jpg',
-  'https://i.pinimg.com/222x/cb/da/61/cbda61d1d510f2379cb3880b6c59044a.jpg',
-];
-
 const ProfilePost = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('post');
@@ -90,7 +84,7 @@ const ProfilePost = () => {
           <p className='text-xs'>TAGGED</p>
         </Tab>
       </TabsHeader>
-      <TabsBody className=' tracking-wider'>
+      <TabsBody className=' tracking-wider relative z-0'>
         {/* here is the first panel  */}
         <TabPanel key={'post'} value={'post'} className='px-0'>
           {loading ? (

@@ -23,10 +23,10 @@ const Message = () => {
     <div className='w-full h-[100vh] flex relative '>
       {/* left side bar code  */}
       <div className='flex '>
-        <div className='hidden md:block '>
+        <div className='hidden md:block ' style={{zIndex:99999, position:'relative'}}>
           <MdSidebar />
         </div>
-        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block `}>
+        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block `} style={{zIndex:99, position:'relative'}}>
           <UserList />
         </div>
       </div>

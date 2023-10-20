@@ -8,10 +8,10 @@ import {
   AUTH,
   AUTHUSER,
   DELETEPOST,
-  FOLLOW,
   GETALLPOST,
   LIKEPOST,
   UPDATEMESSAGE,
+  UPDATEUSER,
 } from './actionType';
 import { Stored } from '../Types/fromLocalStorage';
 
@@ -54,21 +54,15 @@ export const reducer: Reducer<Initial, Action> = (
       let filterData = state.post?.map((el) =>
         el._id !== payload._id ? el : payload,
       );
-      console.log(payload, filterData);
       return { ...state, post: [...filterData] };
     case DELETEPOST:
       let deletedData = state.post?.filter((el) => el._id !== payload._id);
-      console.log(payload, deletedData);
       return { ...state, post: [...deletedData] };
-    case FOLLOW:
-      let followData = state.user?.map((el) =>
-        el._id === payload[0]._id
-          ? payload[0]
-          : el._id === payload[1]._id
-          ? payload[1]
-          : el,
+    case UPDATEUSER:
+      let updatedUserData = state.user?.map((el) =>
+        el._id !== payload._id ? el : payload,
       );
-      return { ...state, user: [...followData] };
+      return  {...state, user:[...updatedUserData]}
     default:
       return { ...state };
   }

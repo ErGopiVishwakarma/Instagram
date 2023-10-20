@@ -10,7 +10,6 @@ import userPic from '../../Images/userPic.jpg';
 import { AxiosResponse } from 'axios';
 import { Spinner } from '@material-tailwind/react';
 import UnfollowPopup from '../Home/UnfollowPopup';
-import { FOLLOW } from '../../Redux/actionType';
 import ChangeProfilePicPopuc from './ChangeProfilePicPopuc';
 
 interface PropType {
@@ -26,7 +25,6 @@ export default function HeaderFile({
 }: PropType) {
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
-  const [isFollowed, setIsFollowed] = useState<boolean>(false);
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
   const data = useSelector((store: Initial) => store.localStorageData);
   const [render, setRender] = useState<boolean>(false);
@@ -57,21 +55,6 @@ export default function HeaderFile({
         console.log(err);
       });
   };
-  // console.log(userData)
-  useEffect(() => {
-    // console.log(userData?.followers)
-    let isFollow = userData?.followers?.find(
-      (el) => el?._id === checkAuth?._id,
-    );
-
-    if (isFollow) {
-      setIsFollowed(true);
-    } else {
-      setIsFollowed(false);
-    }
-  }, [userData]);
-
-  // helper function to check if user are being follwo are not
 
   const buttonStyle =
     'px-4 py-1 bg-gray-200 rounded-md text-sm cursor-pointer tracking-wider hover:bg-gray-400 justify-center items-center';
@@ -94,7 +77,8 @@ export default function HeaderFile({
           {/* for first button check condition  */}
           {checkAuth._id === id ? (
             <button className={`${buttonStyle}`}>Edit profile</button>
-          ) : isFollowed ? (
+          ) : userData?.followers?.find((el) => el?._id === checkAuth?._id,
+          )? (
             <UnfollowPopup
               setLoading={setLoading}
               userId={userData?._id}

@@ -11,7 +11,7 @@ import { BsArrowLeftCircle } from 'react-icons/bs';
 const UserList = () => {
   const chatsData = useSelector((store: Initial) => store.chats);
   return (
-    <div className='w-[375px] md:w-24 lg:w-96 h-[100vh] border-solid border-1 border-r border-gray-400'>
+    <div className='w-[370px] md:w-24 lg:w-[375px] h-[100vh] border-solid border-1 border-r border-gray-400'>
       <div className='flex justify-between md:justify-center lg:justify-between w-full px-7 py-10'>
         <div
           onClick={() => window.history.back()}

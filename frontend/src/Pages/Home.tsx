@@ -22,8 +22,10 @@ const Home = () => {
         <HomeSearch />
       </div>
       {/* left side bar code  */}
-      <div className='hidden md:hidden lg:block relative z-50'>
+      <div className='hidden md:hidden lg:block relative z-50  w-[15.5rem]'>
+        <div className='hidden md:hidden lg:block'>
         <LgSidebar />
+        </div>
       </div>
       <div className='hidden lg:hidden md:block relative z-50'>
         <MdSidebar />
@@ -37,7 +39,7 @@ const Home = () => {
             <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
               {
                 posts && posts.map((el,ind)=>{
-                  return <Post el={el} key={ind} />
+                  return <Post el={el as PostType} key={ind} />
                 })
               }
               </div>

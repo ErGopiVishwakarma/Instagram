@@ -4,7 +4,7 @@ import { PostType } from '../../Types/otherType';
 import { AxiosResponse } from 'axios';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
-import { FOLLOW } from '../../Redux/actionType';
+
 
 interface UnfolowPopupType {
     children:ReactNode;
@@ -25,7 +25,7 @@ const ChangeProfilePicPopuc = ({children}:UnfolowPopupType) => {
         }}>
         {children}
       </div>
-      <Dialog open={open} handler={handleOpenFun} size='xs'>
+      <Dialog open={open} handler={handleOpenFun} size='xs' style={{border:'none',outline:'none'}}>
         <DialogBody
           divider
           className='flex flex-col p-0 rounded-lg '
