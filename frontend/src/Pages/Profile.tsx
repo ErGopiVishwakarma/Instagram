@@ -18,7 +18,7 @@ export default function Profile() {
   const data = useSelector((store: Initial) => store.localStorageData);
 
   const getUserProfile = (id:string | undefined,token:string) =>{
-    fetch(`http://localhost:8080/user/userprofile/${id}`,{
+    fetch(`${process.env.REACT_APP_URL}/user/userprofile/${id}`,{
       method:"GET",
       headers:{
         'Content-Type':"application/json",
@@ -37,7 +37,7 @@ export default function Profile() {
 
   
   const getUserPost= (id:string | undefined,token:string) =>{
-    fetch(`http://localhost:8080/post/${id}`,{
+    fetch(`${process.env.REACT_APP_URL}/post/${id}`,{
       method:"GET",
       headers:{
         'Content-Type':"application/json",
