@@ -26,8 +26,8 @@ const ProfilePost = () => {
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
 
   useEffect(() => {
-    let userDetail = allUser.find((el, ind) => el._id == id);
-    let postDetail = allPost.filter((el: any , ind) => el?.postedBy?._id == id);
+    let userDetail = allUser && allUser?.find((el, ind) => el._id === id);
+    let postDetail = allPost && allPost?.filter((el: any , ind) => el?.postedBy?._id === id);
     setPost(postDetail);
     setUserData(userDetail);
   }, [id, allPost, allUser]);
