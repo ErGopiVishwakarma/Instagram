@@ -29,10 +29,13 @@ const UserList = () => {
       {/* tabs code here  */}
       <div className='w-full h-[100vh-70px] overflow-auto py-2'>
         {/* <TabList /> */}
-        {chatsData &&
+        {chatsData.length > 0 ? (
           chatsData?.map((el, ind) => {
-            return <UserListCard el={el} key={ind} />
-          })}
+            return <UserListCard el={el} key={ind} />;
+          })
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
