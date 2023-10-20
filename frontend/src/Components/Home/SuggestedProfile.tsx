@@ -5,23 +5,31 @@ import { useState } from 'react';
 import HoverPopupForSuggestProfile from './HoverPopupForSuggestProfile';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
+import { NavLink } from 'react-router-dom';
 
 const SuggestedProfile = () => {
-  let arr = new Array(5).fill(0);
-  const suggestedUser = useSelector((store:Initial)=>store.user as AuthUser[])
+  const suggestedUser = useSelector(
+    (store: Initial) => store.user as AuthUser[],
+  );
   const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
-  
 
   return (
     <div style={{ fontFamily: 'Poppins, sans-serif' }} className='w-full '>
       <div className='flex justify-between items-center'>
-        <div className='flex items-center gap-3'>
-          <Avatar src={authUser?.profile? authUser?.profile :imageurl} className='h-11 w-11 ' />
-          <div>
-            <p className='text-sm'>{authUser?.name}</p>
-            <p className='text-xs text-[rgb(115, 115, 115)]'>{authUser?.username}</p>
+        <NavLink to={`/profile/${authUser._id}`}>
+          <div className='flex items-center gap-3 cursor-pointer'>
+            <Avatar
+              src={authUser?.profile ? authUser?.profile : imageurl}
+              className='h-11 w-11 '
+            />
+            <div>
+              <p className='text-sm'>{authUser?.name}</p>
+              <p className='text-xs text-[rgb(115, 115, 115)]'>
+                {authUser?.username}
+              </p>
+            </div>
           </div>
-        </div>
+        </NavLink>
         <p className='text-xs text-[rgb(33,163,247)] text-opacity-100'>
           Switch
         </p>
@@ -34,7 +42,11 @@ const SuggestedProfile = () => {
         {suggestedUser &&
           suggestedUser.map((el, ind) => {
             return (
-              <HoverPopupForSuggestProfile el={el as AuthUser} ind={ind} key={ind} />
+              <HoverPopupForSuggestProfile
+                el={el as AuthUser}
+                ind={ind}
+                key={ind}
+              />
             );
           })}
       </div>
