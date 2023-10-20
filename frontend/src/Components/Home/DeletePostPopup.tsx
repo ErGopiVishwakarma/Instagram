@@ -17,7 +17,7 @@ export default function DeletePostPopup({ id }: HandleFun) {
   const dispatch = useDispatch();
 
   const deletePost = (id: string) => {
-    fetch(`http://localhost:8080/post/${id}`, {
+    fetch(`${process.env.REACT_APP_URL}/post/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
