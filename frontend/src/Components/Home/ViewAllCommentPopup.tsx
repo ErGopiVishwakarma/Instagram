@@ -28,7 +28,7 @@ export default function ViewAllCommentPopup({ el }: any) {
   const dispatch = useDispatch();
 
   const commentOnPost = (id: string) => {
-    fetch(`http://localhost:8080/post/comment/${id}`, {
+    fetch(`${process.env.REACT_APP_URL}/post/comment/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
