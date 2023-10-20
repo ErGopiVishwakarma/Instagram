@@ -85,7 +85,7 @@ const Signup = () => {
     };
     setLoading(true);
     axios
-      .post('http://localhost:8080/user/register', config)
+      .post(`${process.env.REACT_APP_URL}/user/register`, config)
       .then((res) => {
         if (res.data.msg == 'email already registered') {
           setEmailAlreadyRegisteredError(true);
