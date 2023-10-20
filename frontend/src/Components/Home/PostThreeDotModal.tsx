@@ -19,10 +19,10 @@ export default function PostThreeDotModal({ el }: any) {
       <p onClick={handleOpen} className='text-3xl p-3 cursor-pointer'>
         ...
       </p>
-      <Dialog open={open} handler={handleOpen} size='xs'>
+      <Dialog open={open} handler={handleOpen} size='xs' style={{border:'none',outline:'none'}}>
         <DialogBody
           divider
-          className='flex flex-col p-0 rounded-lg border-solid border-[1px] border-gray-800'
+          className='flex flex-col p-0 rounded-lg '
           style={{
             boxShadow:
               'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
