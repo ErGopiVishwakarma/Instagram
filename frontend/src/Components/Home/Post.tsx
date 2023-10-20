@@ -27,7 +27,7 @@ const Post = ({el}:any) => {
 
   
     const getUserPost = (id: string | undefined, token: string) => {
-      fetch(`http://localhost:8080/post/${id}`, {
+      fetch(`${process.env.REACT_APP_URL}/post/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const Post = ({el}:any) => {
         {/*=================================== this is the post image=======================================  */}
         <div className='w-[100%] bg-black flex justify-center '>
           <img
-            src={`http://localhost:8080/${el.postUrl}`}
+            src={`${process.env.REACT_APP_URL}/${el.postUrl}`}
             className='w-full object-contain'
           />
         </div>
