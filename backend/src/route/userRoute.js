@@ -116,7 +116,7 @@ userRouter.get('/getuser/:id', authenticate, async (req, res) => {
 userRouter.get('/getalluser', authenticate, async (req, res) => {
     // { _id: { $ne: req.user._id } }
     try {
-        let user = await UserModel.find().select('-password -email')
+        let user = await UserModel.find({_id:{$ne:req.user._id}}).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
        
         for (let i = 0; i < user.length; i++) {
             let index = Math.floor(Math.random(0) * user.length)
@@ -124,6 +124,9 @@ userRouter.get('/getalluser', authenticate, async (req, res) => {
                 index=0
               }
             [user[i],user[index]] = [user[index],user[i]]
+        }
+        if(user.length > 5 ){
+            user = user.slice(0,5)
         }
         res.status(200).send(user)
     } catch (error) {
