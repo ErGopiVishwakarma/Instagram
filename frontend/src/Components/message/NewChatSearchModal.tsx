@@ -35,7 +35,7 @@ const {selectedChat,setSelectedChat, chats, setChats} = useContext(Context) as C
     try {
       setLoading(true);
       const data = await fetch(
-        `http://localhost:8080/user/search?search=${searchValue}`,
+        `${process.env.REACT_APP_URL}/user/search?search=${searchValue}`,
         {
           method: 'GET',
           headers: {
@@ -58,7 +58,7 @@ const {selectedChat,setSelectedChat, chats, setChats} = useContext(Context) as C
       let userObj={
           userId
       }
-      const data = await fetch(`http://localhost:8080/chat`, {
+      const data = await fetch(`${process.env.REACT_APP_URL}/chat`, {
           method: 'POST',
           headers: {
               "Content-Type":'application/json',
