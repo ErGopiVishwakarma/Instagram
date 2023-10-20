@@ -25,7 +25,7 @@ const UnfollowPopup = ({children,setLoading,userId,setUserData}:UnfolowPopupType
       unfollowId: userId,
     };
     setLoading(true);
-    fetch(`http://localhost:8080/user/unfollow`, {
+    fetch(`${process.env.REACT_APP_URL}/user/unfollow`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
