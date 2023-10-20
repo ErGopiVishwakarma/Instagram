@@ -66,7 +66,7 @@ export default function ViewAllCommentPopup({ el }: any) {
         }}>
         view all {el.comments.length} comments
       </p>
-      <Dialog open={open} handler={handleOpenFun} size='sm'>
+      <Dialog open={open} handler={handleOpenFun} size='sm' style={{border:'none',outline:'none'}}>
         <div className={`flex items-center justify-between px-5 py-3  `}>
           <div className='flex gap-4 items-center'>
             <Avatar className='h-12 w-12' src={imageurl} />
