@@ -26,9 +26,9 @@ export default function LikeDetailPopup({ el }: any) {
         }}>
         others
       </span>
-      <Dialog open={open} handler={handleOpenFun} size='xs'>
+      <Dialog open={open} handler={handleOpenFun} size='xs' style={{border:'none',outline:'none'}}>
         <div
-          className={`flex items-center justify-end px-5 py-5 border-b-[1px] border-solid border-gray-600 relative `}>
+          className={`flex items-center justify-end px-5 py-5 relative `}>
           <div className='text-base text-center absolute left-0 right-0 font-bold'>
             <h2>Likes</h2>
           </div>
