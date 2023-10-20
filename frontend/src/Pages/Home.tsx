@@ -38,9 +38,9 @@ const Home = () => {
             {/* all post come here  */}
             <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
               {
-                posts && posts.map((el,ind)=>{
+                posts.length > 0 ? posts.map((el,ind)=>{
                   return <Post el={el as PostType} key={ind} />
-                })
+                }):<></>
               }
               </div>
              
