@@ -35,7 +35,7 @@ export default function HeaderFile({
       followerId: userData?._id,
     };
     setLoading(true);
-    fetch(`http://localhost:8080/user/follow`, {
+    fetch(`${process.env.REACT_APP_URL}/user/follow`, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function HeaderFile({
               setLoading={setLoading}
               userId={userData?._id}
               setUserData={setUserData}>
-              <button className={`w-[100px] ${buttonStyle}`}>
+              <button className={`w-[100px] ${buttonStyle} flex justify-center items-center`}>
                 {loading ? <Spinner className='h-5 w-5' /> : 'Following'}
               </button>
             </UnfollowPopup>
