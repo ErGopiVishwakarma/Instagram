@@ -86,7 +86,7 @@ export default function Create({ children }: Children) {
         const formData = new FormData();
         formData.append('croppedImage', blob, 'image.jpg');
 
-        fetch('http://localhost:8080/upload', {
+        fetch(`${process.env.REACT_APP_URL}/upload`, {
           method: 'POST',
           body: formData,
         })
@@ -117,7 +117,7 @@ export default function Create({ children }: Children) {
     setGoNext(false);
     setSuccessfulPage(true);
     setLoading(true)
-    fetch(`http://localhost:8080/post`, {
+    fetch(`${process.env.REACT_APP_URL}/post`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
