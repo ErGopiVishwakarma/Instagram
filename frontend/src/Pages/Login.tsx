@@ -65,7 +65,7 @@ const Login = () => {
     };
     setLoading(true);
     axios
-      .post('http://localhost:8080/user/login', config)
+      .post(`${process.env.REACT_APP_URL}/user/login`, config)
       .then((res) => {
         console.log(res);
         let time = new Date();
