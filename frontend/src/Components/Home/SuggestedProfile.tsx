@@ -16,10 +16,10 @@ const SuggestedProfile = () => {
   return (
     <div style={{ fontFamily: 'Poppins, sans-serif' }} className='w-full '>
       <div className='flex justify-between items-center'>
-        <NavLink to={`/profile/${authUser._id}`}>
+        <NavLink to={`/profile/${authUser?._id}`}>
           <div className='flex items-center gap-3 cursor-pointer'>
             <Avatar
-              src={authUser?.profile ? authUser?.profile : imageurl}
+              src={authUser?.profile ? `${process.env.REACT_APP_URL}/${authUser?.profile}` : imageurl}
               className='h-11 w-11 '
             />
             <div>

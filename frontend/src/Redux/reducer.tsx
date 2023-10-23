@@ -49,7 +49,7 @@ export const reducer: Reducer<Initial, Action> = (
     case GETALLPOST:
       return { ...state, post: payload };
     case ADDPOST:
-      return { ...state, post: [...state.post, payload] };
+      return { ...state, post: [payload,...state.post] };
     case LIKEPOST:
       let filterData = state.post?.map((el) =>
         el._id !== payload._id ? el : payload,

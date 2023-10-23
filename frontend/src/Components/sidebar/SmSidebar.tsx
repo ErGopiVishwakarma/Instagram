@@ -40,7 +40,7 @@ const SmSidebar = () => {
           <PiTelegramLogoBold className='h-5 w-5' />
         </ListItem>
       </NavLink>
-      <NavLink to={`/profle/${checkAuth._id}`}>
+      <NavLink to={`/profile/${checkAuth._id}`}>
         <ListItem className='flex justify-center'>
           <Avatar
             src='https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80'

@@ -29,7 +29,7 @@ const UnfollowPopup = ({children,setLoading,userId,setUserData}:UnfolowPopupType
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${data.token}`,
+        Authorization: `Bearer ${data?.token}`,
       },
       body: JSON.stringify(config),
     })

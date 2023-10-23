@@ -33,9 +33,9 @@ export default function SearchDrawer({ children }: Children) {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchData, setSearchData] = useState<AuthUser[] | []>([]);
 
-  function debounce(func: (text:string) => void, delay: number) {
+  function debounce(func: (text: string) => void, delay: number) {
     let timer: any;
-    return function (str:string) {
+    return function (str: string) {
       clearTimeout(timer);
       timer = setTimeout(() => {
         func(str);
@@ -43,8 +43,7 @@ export default function SearchDrawer({ children }: Children) {
     };
   }
 
-  const fetchFunction = async (text:string) => {
-
+  const fetchFunction = async (text: string) => {
     try {
       setLoading(true);
       const response = await fetch(
@@ -136,13 +135,13 @@ export default function SearchDrawer({ children }: Children) {
               />
             </div>
           </div>
-          <div className='w-full h-[calc(100vh - 150px)] p-6 flex justify-center items-center flex-col gap-5 '>
+          <div className='w-full h-[calc(100vh - 150px)] flex flex-col p-3  '>
             {searchData.length > 0 ? (
               searchData?.map((el) => {
                 return (
-                  <div className='flex justify-between items-center w-full'>
+
                     <NavLink to={`/profile/${el._id}`}>
-                      <div className='flex items-center gap-3 cursor-pointer'>
+                      <div className='flex items-center gap-3 cursor-pointer w-full hover:bg-blue-gray-200 px-6 py-2 rounded-md'>
                         <Avatar
                           src={el?.profile ? el?.profile : imageurl}
                           className='h-11 w-11 '
@@ -155,10 +154,7 @@ export default function SearchDrawer({ children }: Children) {
                         </div>
                       </div>
                     </NavLink>
-                    <p className='text-xs text-black text-opacity-100 cursor-pointer'>
-                      <AiOutlineClose className='h-6 w-6 text-red-900' />
-                    </p>
-                  </div>
+  
                 );
               })
             ) : (

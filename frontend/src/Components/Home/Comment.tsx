@@ -3,7 +3,7 @@ import { BsEmojiFrown } from 'react-icons/bs';
 import LikeDetailPopup from './LikeDetailPopup';
 import { AxiosResponse } from 'axios';
 import { PostType } from '../../Types/otherType';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMMENTPOST, LIKEPOST } from '../../Redux/actionType';
 import ViewAllCommentPopup from './ViewAllCommentPopup';
@@ -35,7 +35,7 @@ const Comment = ({ el }: any) => {
   const callFun = (e: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(e.key);
     if (e.key === 'Enter') {
-      commentOnPost(el._id);
+      commentOnPost(el?._id);
       setText('');
     }
   };
@@ -43,21 +43,21 @@ const Comment = ({ el }: any) => {
     <div
       className='flex flex-col gap-1 text-[13px] px-2'
       style={{ fontFamily: 'Poppins, sans-serif' }}>
-      {el?.likes.length > 0 ? (
+      {el?.likes?.length > 0 ? (
         <p>
           Liked by{' '}
           <span className=' font-bold cursor-pointer'>
-            {el.likes[0].username}
+            {el?.likes[0].username}
           </span>{' '}
           and <LikeDetailPopup el={el} />
         </p>
       ) : (
         <></>
       )}
-      {el?.comments.length > 0 ? (
+      {el?.comments?.length > 0 ? (
         <>
-          <p>commented by <span className='font-bold'>{el.comments[0].commentedBy.username}</span> and others</p>
-          <ViewAllCommentPopup el={el} />
+          <p>commented by <span className='font-bold'>{el.comments[0].commentedBy?.username}</span> and others</p>
+          <ViewAllCommentPopup el={el as PostType}>view all {el?.comments?.length} comments</ViewAllCommentPopup>
         </>
       ) : (
         <></>

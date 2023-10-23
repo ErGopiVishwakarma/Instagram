@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../Types/reducerType';
 import { PostType } from '../Types/otherType';
 import { AxiosResponse } from 'axios';
+import SmSidebar from '../Components/sidebar/SmSidebar';
 
 export default function Profile() {
   const { id } = useParams();
@@ -16,48 +17,52 @@ export default function Profile() {
   const [userData, setUserData] = useState<AuthUser>();
   const [userPostData, setUserPostData] = useState<PostType[] | []>();
   const data = useSelector((store: Initial) => store.localStorageData);
+  const [againRender, setAgainRender] = useState<boolean>(false);
 
-  const getUserProfile = (id:string | undefined,token:string) =>{
-    fetch(`${process.env.REACT_APP_URL}/user/userprofile/${id}`,{
-      method:"GET",
-      headers:{
-        'Content-Type':"application/json",
-        'Authorization':`Bearer ${token}`
+  const getUserProfile = (id: string | undefined, token: string) => {
+    fetch(`${process.env.REACT_APP_URL}/user/userprofile/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-    }).then(ress=>ress.json()).then(
-      (res: AxiosResponse<PostType>) => {
-        const userData:any = res;
+    })
+      .then((ress) => ress.json())
+      .then((res: AxiosResponse<PostType>) => {
+        const userData: any = res;
         // console.log(userData)
-        setUserData(userData)
-      }
-    ).catch((err:any)=>{
-      console.log(err)
-    })
-  }
+        setUserData(userData);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
 
-  
-  const getUserPost= (id:string | undefined,token:string) =>{
-    fetch(`${process.env.REACT_APP_URL}/post/${id}`,{
-      method:"GET",
-      headers:{
-        'Content-Type':"application/json",
-        'Authorization':`Bearer ${token}`
+  const getUserPost = (id: string | undefined, token: string) => {
+    fetch(`${process.env.REACT_APP_URL}/post/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-    }).then(ress=>ress.json()).then(
-      (res: AxiosResponse<PostType>) => {
-        const postData:any = res;
-        // console.log(postData)
-        setUserPostData(postData)
-      }
-    ).catch((err:any)=>{
-      console.log(err)
     })
-  }
+      .then((ress) => ress.json())
+      .then((res: AxiosResponse<PostType>) => {
+        const postData: any = res;
+        // console.log(postData)
+        setUserPostData(postData);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getUserProfile(id, data.token);
+  }, [id,againRender]);
 
-  useEffect(()=>{
-    getUserProfile(id,data.token)
-    getUserPost(id,data.token)
-    },[id])
+  useEffect(() => {
+    getUserPost(id, data.token);
+  }, [id]);
 
   return (
     <div className='w-full flex'>
@@ -71,10 +76,15 @@ export default function Profile() {
         </div>
       </div>
       {/* right part  */}
-      <div className='w-full h-[100vh] px-[87px] pt-10 pb-12 overflow-y-auto '>
+      <div className='w-full h-[100vh] px-[4px] md:px-4 lg:px-20 pt-10 pb-12 overflow-y-auto '>
         {/* profile part  */}
-        <div className='pl-[70px]'>
-          <HeaderFile userData={userData as AuthUser} userPostData={userPostData as PostType[]} setUserData={setUserData} />
+        <div className='pl-0 md:pl-4 lg:pl[70px]'>
+          <HeaderFile
+            userData={userData as AuthUser}
+            userPostData={userPostData as PostType[]}
+            setUserData={setUserData}
+            setAgainRender = {setAgainRender}
+          />
         </div>
         {/* add new + sign part  */}
         {checkAuth?._id === id ? (
@@ -94,6 +104,7 @@ export default function Profile() {
           <ProfilePost />
         </div>
       </div>
+      <SmSidebar />
     </div>
   );
 }

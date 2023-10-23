@@ -15,7 +15,7 @@ const Likeshare = ({ el }: any) => {
   const dispatch = useDispatch();
 
   const likeFunHandler = () => {
-    likePost(data.token, el._id, dispatch);
+    likePost(data.token, el?._id, dispatch);
   };
 
   return (
@@ -25,7 +25,7 @@ const Likeshare = ({ el }: any) => {
           <div
             className=' cursor-pointer p-2 hover:bg-gray-300 rounded-full'
             onClick={likeFunHandler}>
-            {el.likes?.find((ele: LikeType) => ele._id == authUser._id) ? (
+            {el.likes?.find((ele: LikeType) => ele?._id == authUser?._id) ? (
               <BsHeartFill className='h-5 w-5 text-[#f00707]' />
             ) : (
               <BsHeart className='w-5 h-5' />

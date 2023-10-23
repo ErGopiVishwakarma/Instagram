@@ -11,6 +11,7 @@ require('dotenv').config()
 const multer = require('multer')
 const postRouter = require('./route/postRoute')
 
+
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -41,6 +42,7 @@ const storage = multer.diskStorage({
         return cb(null, `${Date.now()}_${file.originalname}`)
     }
 })
+
 
 const upload = multer({ storage })
 

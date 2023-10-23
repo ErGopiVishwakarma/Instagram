@@ -16,12 +16,14 @@ interface PropType {
   userData: AuthUser;
   userPostData: PostType[];
   setUserData: React.Dispatch<React.SetStateAction<AuthUser | undefined>>;
+  setAgainRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function HeaderFile({
   userData,
   userPostData,
   setUserData,
+  setAgainRender,
 }: PropType) {
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
@@ -61,29 +63,46 @@ export default function HeaderFile({
 
   return (
     <header
-      className='flex gap-[100px] tracking-wider'
+      className='flex gap-5 md:gap-16 lg:gap-[100px] tracking-wider'
       style={{ fontFamily: 'sans-serif' }}>
-      <ChangeProfilePicPopuc>
+      {checkAuth?._id === id ? (
+        <ChangeProfilePicPopuc setAgainRender={setAgainRender}>
+          <div>
+            <img
+              src={
+                userData?.profile
+                  ? `${process.env.REACT_APP_URL}/${userData?.profile}`
+                  : userPic
+              }
+              className=' h-[152px] w-[152px] rounded-full cursor-pointer '
+            />
+          </div>
+        </ChangeProfilePicPopuc>
+      ) : (
         <div>
           <img
-            src={userData?.profile ? userData?.profile : userPic}
+            src={
+              userData?.profile
+                ? `${process.env.REACT_APP_URL}/${userData?.profile}`
+                : userPic
+            }
             className=' h-[152px] w-[152px] rounded-full cursor-pointer '
           />
         </div>
-      </ChangeProfilePicPopuc>
+      )}
       <div className='flex flex-col gap-[15px]'>
-        <div className='flex gap-4 items-center pb-2'>
+        <div className='flex gap-4 items-center pb-2 flex-wrap'>
           <p className='text-[20px]'>{userData?.username}</p>
           {/* for first button check condition  */}
           {checkAuth._id === id ? (
             <button className={`${buttonStyle}`}>Edit profile</button>
-          ) : userData?.followers?.find((el) => el?._id === checkAuth?._id,
-          )? (
+          ) : userData?.followers?.find((el) => el?._id === checkAuth?._id) ? (
             <UnfollowPopup
               setLoading={setLoading}
               userId={userData?._id}
               setUserData={setUserData}>
-              <button className={`w-[100px] ${buttonStyle} flex justify-center items-center`}>
+              <button
+                className={`w-[100px] ${buttonStyle} flex justify-center items-center`}>
                 {loading ? <Spinner className='h-5 w-5' /> : 'Following'}
               </button>
             </UnfollowPopup>
@@ -133,7 +152,6 @@ export default function HeaderFile({
         </div>
         <p className='text-sm'>{userData?.name}</p>
         <p className='text-sm'>struggle</p>
-        <p className='text-sm'>https://www.instagram.com/p/CkncHIopiD7/</p>
       </div>
     </header>
   );

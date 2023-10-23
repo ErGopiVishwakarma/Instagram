@@ -27,7 +27,8 @@ const ProfilePost = () => {
 
   useEffect(() => {
     let userDetail = allUser && allUser?.find((el, ind) => el._id === id);
-    let postDetail = allPost && allPost?.filter((el: any , ind) => el?.postedBy?._id === id);
+    let postDetail =
+      allPost && allPost?.filter((el: any, ind) => el?.postedBy?._id === id);
     setPost(postDetail);
     setUserData(userDetail);
   }, [id, allPost, allUser]);
@@ -98,7 +99,7 @@ const ProfilePost = () => {
               })}
             </div>
           ) : (
-            <div className='flex flex-col justify-center items-center gap-1 pt-3'>
+            <div className='flex flex-col justify-center items-center gap-1 py-6'>
               <div className='border-[1px] border-solid border-black h-16 w-16 flex justify-center items-center rounded-full'>
                 <BsCamera className='h-9 w-9' />
               </div>
@@ -107,12 +108,12 @@ const ProfilePost = () => {
           )}
 
           {/* bottom part here  */}
-          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer'>
-            <p className='' style={{ wordSpacing: '8px' }}>
+          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer w-full'>
+            <p className=' text-center' style={{ wordSpacing: '8px' }}>
               Meta About Blog Jobs Help API Privacy Terms Locations Instagram
               Lite Threads Contact Uploading & Non-Users Meta Verified
             </p>
-            <p className='' style={{ wordSpacing: '10px' }}>
+            <p className='text-center' style={{ wordSpacing: '10px' }}>
               English © 2023 Instagram from Meta
             </p>
           </div>
@@ -130,7 +131,7 @@ const ProfilePost = () => {
               })}
             </div>
           ) : (
-            <div className='flex flex-col justify-center items-center gap-1 pt-3'>
+            <div className='flex flex-col justify-center items-center gap-1 py-6'>
               <div className='border-[1px] border-solid border-black h-16 w-16 flex justify-center items-center rounded-full'>
                 <BsCamera className='h-9 w-9' />
               </div>
@@ -139,12 +140,12 @@ const ProfilePost = () => {
           )}
 
           {/* bottom part here  */}
-          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer'>
-            <p className='' style={{ wordSpacing: '8px' }}>
+          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer w-full'>
+            <p className=' text-center' style={{ wordSpacing: '8px' }}>
               Meta About Blog Jobs Help API Privacy Terms Locations Instagram
               Lite Threads Contact Uploading & Non-Users Meta Verified
             </p>
-            <p className='' style={{ wordSpacing: '10px' }}>
+            <p className='text-center' style={{ wordSpacing: '10px' }}>
               English © 2023 Instagram from Meta
             </p>
           </div>
@@ -152,32 +153,20 @@ const ProfilePost = () => {
         {/* third panel  */}
         {checkAuth?._id === id ? (
           <TabPanel key={'saved'} value={'saved'} className='px-0'>
-            {loading ? (
-              <div className='py-5 flex justify-center items-center'>
-                <Spinner className='h-8 w-8' />
+            <div className='flex flex-col justify-center items-center gap-1 py-6'>
+              <div className='border-[1px] border-solid border-black h-16 w-16 flex justify-center items-center rounded-full'>
+                <BsCamera className='h-9 w-9' />
               </div>
-            ) : post?.length > 0 ? (
-              <div className='grid grid-cols-3 gap-1'>
-                {post?.map((el, ind) => {
-                  return <Posts el={el} key={ind} />;
-                })}
-              </div>
-            ) : (
-              <div className='flex flex-col justify-center items-center gap-1 pt-3'>
-                <div className='border-[1px] border-solid border-black h-16 w-16 flex justify-center items-center rounded-full'>
-                  <BsCamera className='h-9 w-9' />
-                </div>
-                <p className='text-[20px] text-black font-bold'>No post yet.</p>
-              </div>
-            )}
+              <p className='text-[20px] text-black font-bold'>No post yet.</p>
+            </div>
 
             {/* bottom part here  */}
-            <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer'>
-              <p className='' style={{ wordSpacing: '8px' }}>
+            <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer w-full'>
+              <p className=' text-center' style={{ wordSpacing: '8px' }}>
                 Meta About Blog Jobs Help API Privacy Terms Locations Instagram
                 Lite Threads Contact Uploading & Non-Users Meta Verified
               </p>
-              <p className='' style={{ wordSpacing: '10px' }}>
+              <p className='text-center' style={{ wordSpacing: '10px' }}>
                 English © 2023 Instagram from Meta
               </p>
             </div>
@@ -195,12 +184,12 @@ const ProfilePost = () => {
           </div>
 
           {/* bottom part here  */}
-          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer'>
-            <p className='' style={{ wordSpacing: '8px' }}>
+          <div className='text-xs flex flex-col justify-center items-center gap-3 pt-[30px] cursor-pointer w-full'>
+            <p className=' text-center' style={{ wordSpacing: '8px' }}>
               Meta About Blog Jobs Help API Privacy Terms Locations Instagram
               Lite Threads Contact Uploading & Non-Users Meta Verified
             </p>
-            <p className='' style={{ wordSpacing: '10px' }}>
+            <p className='text-center' style={{ wordSpacing: '10px' }}>
               English © 2023 Instagram from Meta
             </p>
           </div>

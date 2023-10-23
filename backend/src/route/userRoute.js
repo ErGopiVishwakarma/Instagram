@@ -5,7 +5,7 @@ const UserModel = require("../model/userModel");
 const emailValidator = require('deep-email-validator')
 const cookie = require('cookie');
 const authenticate = require("../middleware/authentication");
-
+const EmailValidator = require('email-deep-validator');
 
 
 
@@ -14,8 +14,9 @@ userRouter.post('/register', async (req, res) => {
 
     try {
         // validating the email which is valid or not 
-        const { valid, reason, validators } = await emailValidator.validate(email);
-        if (valid) {
+        const emailValidator = new EmailValidator();
+        const { wellFormed, validDomain, validMailbox } = await emailValidator.verify(email);
+        if (wellFormed && validDomain) {
             console.log('step1')
             // looking in database this user is already exist or not 
 
@@ -116,17 +117,17 @@ userRouter.get('/getuser/:id', authenticate, async (req, res) => {
 userRouter.get('/getalluser', authenticate, async (req, res) => {
     // { _id: { $ne: req.user._id } }
     try {
-        let user = await UserModel.find({_id:{$ne:req.user._id}}).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
-       
+        let user = await UserModel.find({ _id: { $ne: req.user._id } }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile')
+
         for (let i = 0; i < user.length; i++) {
             let index = Math.floor(Math.random(0) * user.length)
-              if(index<0){
-                index=0
-              }
-            [user[i],user[index]] = [user[index],user[i]]
+            if (index < 0) {
+                index = 0
+            }
+            [user[i], user[index]] = [user[index], user[i]]
         }
-        if(user.length > 5 ){
-            user = user.slice(0,5)
+        if (user.length > 5) {
+            user = user.slice(0, 5)
         }
         res.status(200).send(user)
     } catch (error) {
@@ -154,9 +155,9 @@ userRouter.get('/userprofile/:id', authenticate, async (req, res) => {
 
 userRouter.put('/follow', authenticate, async (req, res) => {
     UserModel.findByIdAndUpdate(req.body.followerId, {
-        $push: { followers: req.user._id }
+        $push: { followers: req.user?._id }
     }, { new: true }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile').then(result => {
-        UserModel.findByIdAndUpdate(req.user._id, {
+        UserModel.findByIdAndUpdate(req.user?._id, {
             $push: { followings: req.body.followerId }
         }, { new: true }).select('-password -email').then(value => {
             res.status(200).send(result)
@@ -170,9 +171,9 @@ userRouter.put('/follow', authenticate, async (req, res) => {
 
 userRouter.put('/unfollow', authenticate, async (req, res) => {
     UserModel.findByIdAndUpdate(req.body.unfollowId, {
-        $pull: { followers: req.user._id }
+        $pull: { followers: req.user?._id }
     }, { new: true }).select('-password -email').populate('followers', '_id name username profile').populate('followings', '_id name username profile').then(result => {
-        UserModel.findByIdAndUpdate(req.user._id, {
+        UserModel.findByIdAndUpdate(req.user?._id, {
             $pull: { followings: req.body.unfollowId }
         }, { new: true }).select('-password -email').then(value => {
             res.status(200).send(result)
@@ -182,6 +183,23 @@ userRouter.put('/unfollow', authenticate, async (req, res) => {
     }).catch(error => {
         res.status(400).send({ error })
     })
+})
+
+// update user profile 
+userRouter.patch('/updatepic', authenticate, async (req, res) => {
+    try {
+        UserModel.findByIdAndUpdate(req.user?._id, {
+            $set: { profile: req.body.image }
+        }, { new: true }).then(ans => {
+            console.log(ans)
+            res.status(200).send(ans)
+        }).catch(error => {
+            res.status(400).send({ error })
+        })
+    } catch (error) {
+        res.status(400).send({ error })
+    }
+
 })
 
 

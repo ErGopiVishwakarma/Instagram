@@ -27,8 +27,8 @@ export default function PostThreeDotModal({ el }: any) {
             boxShadow:
               'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
           }}>
-          {authUser._id === el.postedBy._id ? (
-            <DeletePostPopup id={el._id} />
+          {authUser._id === el?.postedBy?._id ? (
+            <DeletePostPopup id={el?._id} />
           ) : (
             <div
               className={` ${divClass} cursor-pointer text-[#f00707]`}

@@ -31,10 +31,10 @@ const Home = () => {
         <MdSidebar />
       </div>
       {/* main div code of post  */}
-      <div className='w-full overflow-auto flex py-12 md:py-8 lg:py-12 '>
+      <div className='w-full overflow-auto flex py-12 md:py-8 lg:py-8 '>
         <div className='w-full md:w-full lg:w-[65%]'>
           <div className='w-[100%]'>
-            <Following />
+            {/* <Following /> */}
             {/* all post come here  */}
             <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
               {

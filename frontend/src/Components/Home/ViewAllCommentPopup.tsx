@@ -12,20 +12,21 @@ import { GrClose } from 'react-icons/gr';
 import { BsHeart } from 'react-icons/bs';
 import { AxiosResponse } from 'axios';
 import { LIKEPOST } from '../../Redux/actionType';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface HandleFun {
-  fun: React.Dispatch<React.SetStateAction<boolean>>;
-  id: any;
+interface CommentPopupType {
+  el:PostType;
+  children:ReactNode
 }
 
-export default function ViewAllCommentPopup({ el }: any) {
+export default function ViewAllCommentPopup({ el,children }:CommentPopupType) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
   const [text, setText] = useState<string>('');
   const data = useSelector((store: Initial) => store.localStorageData);
   const dispatch = useDispatch();
+  const postedBy = el.postedBy as AuthUser
 
   const commentOnPost = (id: string) => {
     fetch(`${process.env.REACT_APP_URL}/post/comment/${id}`, {
@@ -49,7 +50,7 @@ export default function ViewAllCommentPopup({ el }: any) {
   const callFun = (e: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(e.key);
     if (e.key === 'Enter') {
-      commentOnPost(el._id);
+      commentOnPost(el?._id);
       setText('');
     }
   };
@@ -64,14 +65,14 @@ export default function ViewAllCommentPopup({ el }: any) {
         onClick={() => {
           handleOpenFun();
         }}>
-        view all {el.comments.length} comments
+        {children}
       </p>
       <Dialog open={open} handler={handleOpenFun} size='sm' style={{border:'none',outline:'none'}}>
         <div className={`flex items-center justify-between px-5 py-3  `}>
           <div className='flex gap-4 items-center'>
-            <Avatar className='h-12 w-12' src={imageurl} />
+            <Avatar className='h-12 w-12' src={postedBy ? postedBy?.profile : imageurl} />
             <p className='text-sm text-center font-bold'>
-              {el.postedBy?.username}
+              {postedBy?.username}
             </p>
           </div>
           <div onClick={handleOpenFun} className=' cursor-pointer'>
@@ -92,7 +93,7 @@ export default function ViewAllCommentPopup({ el }: any) {
                   className='flex justify-between gap-4 items-start'
                   key={ind}>
                   <Avatar
-                    src={ele.profile ? ele.profile : imageurl}
+                    src={ele.profile ? ele?.profile : imageurl}
                     className='h-10 w-10 '
                   />
                   <div className='w-full pt-1'>

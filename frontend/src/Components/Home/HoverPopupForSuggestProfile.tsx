@@ -108,12 +108,12 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
           }}
           onMouseOut={() => setShowPopup(false)}>
           <Avatar
-            src={el.profile ? el.profile : imageurl}
+            src={el?.profile ? `${process.env.REACT_APP_URL}/${el?.profile}` : imageurl}
             className='h-11 w-11 '
           />
           <div>
-            <p className='text-sm'>{el.name}</p>
-            <p className='text-xs text-[rgb(115, 115, 115)]'>{el.username}</p>
+            <p className='text-sm'>{el?.name}</p>
+            <p className='text-xs text-[rgb(115, 115, 115)]'>{el?.username}</p>
           </div>
         </div>
       </NavLink>
@@ -127,7 +127,7 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
         <NavLink to={`/profile/${el?._id}`}>
           <div className='flex items-center gap-3 p-4'>
             <Avatar
-              src={el?.profile ? el?.profile : imageurl}
+              src={el?.profile ? `${process.env.REACT_APP_URL}/${el?.profile}` : imageurl}
               className='h-14 w-14 '
             />
             <div>

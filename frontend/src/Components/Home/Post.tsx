@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Likeshare from './Likeshare';
 import Comment from './Comment';
-import userPick from '../../Images/userimage.png';
+import userPick from '../../Images/userPic.jpg';
 import { NavLink } from 'react-router-dom';
 import HoverDetailPopup from './HoverDetailPopup';
 import PostThreeDotModal from './PostThreeDotModal';
@@ -55,16 +55,16 @@ const Post = ({el}:any) => {
         {/* user post code here  */}
         <div className='flex items-center justify-between pb-2 relative'>
           {/* =======================================navigate link here to go profile page========================================  */}
-          <NavLink to={`/profile/${el.postedBy._id}`}>
+          <NavLink to={`/profile/${el?.postedBy?._id}`}>
             <div
               className='flex gap-2 items-center'
               onMouseOver={() =>{
-                getUserPost(el.postedBy._id,data.token)
+                getUserPost(el?.postedBy?._id,data.token)
                  setShowPopup(true)
                 }}
               onMouseOut={() => setShowPopup(false)}>
               <Avatar
-                src={el.postedBy?.profile ? el.postedBy?.profile : userPick}
+                src={el.postedBy?.profile ? `${process.env.REACT_APP_URL}/${el.postedBy?.profile}` : userPick}
                 className='h-9 w-9'
               />
               <p className='text-sm'>{el.postedBy?.username}</p>
