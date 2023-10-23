@@ -40,23 +40,23 @@ export default function PostThreeDotModal({ el }: any) {
           )}
 
           <div
-            className={`${divClass} cursor-pointer text-[#f00707]`}
+            className={`${divClass} cursor-not-allowed text-[#f00707]`}
             onClick={handleOpen}>
             <p>Unfollow</p>
           </div>
-          <div className={`${divClass} cursor-pointer text-black`}>
+          <div className={`${divClass} cursor-not-allowed text-black`}>
             <p>Add to favorites</p>
           </div>
-          <div className={`${divClass} cursor-pointer text-black`}>
+          <div className={`${divClass} cursor-not-allowed text-black`}>
             <p>Go to post</p>
           </div>
-          <div className={`${divClass} cursor-pointer text-black`}>
+          <div className={`${divClass} cursor-not-allowed text-black`}>
             <p>Share to</p>
           </div>
-          <div className={`${divClass} cursor-pointer text-black`}>
+          <div className={`${divClass} cursor-not-allowed text-black`}>
             <p>Copy link</p>
           </div>
-          <div className={`${divClass} cursor-pointer text-black`}>
+          <div className={`${divClass} cursor-not-allowed text-black`}>
             <p>About this account</p>
           </div>
           <div

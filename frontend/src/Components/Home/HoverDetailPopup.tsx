@@ -27,7 +27,7 @@ const HoverDetailPopup = ({
       onMouseOut={() => setShowPopup(false)}>
       <div className='flex items-center gap-3 p-4'>
         <Avatar
-          src={authUser?.profile ? authUser?.profile : imageurl}
+          src={authUser?.profile ? `${process.env.REACT_APP_URL}/${authUser?.profile}` : imageurl}
           className='h-14 w-14 '
         />
         <div>

@@ -108,7 +108,11 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
           }}
           onMouseOut={() => setShowPopup(false)}>
           <Avatar
-            src={el?.profile ? `${process.env.REACT_APP_URL}/${el?.profile}` : imageurl}
+            src={
+              el?.profile
+                ? `${process.env.REACT_APP_URL}/${el?.profile}`
+                : imageurl
+            }
             className='h-11 w-11 '
           />
           <div>
@@ -127,7 +131,11 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
         <NavLink to={`/profile/${el?._id}`}>
           <div className='flex items-center gap-3 p-4'>
             <Avatar
-              src={el?.profile ? `${process.env.REACT_APP_URL}/${el?.profile}` : imageurl}
+              src={
+                el?.profile
+                  ? `${process.env.REACT_APP_URL}/${el?.profile}`
+                  : imageurl
+              }
               className='h-14 w-14 '
             />
             <div>
@@ -209,11 +217,16 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
                   'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
               }}>
               <div
-                className={`flex flex-col gap-1 py-5 border-b-[1px] border-solid border-gray-300 justify-center items-center`}>
-                <h1 className='text-2xl  text-black'>Delete Post</h1>
-                <p className='text-sm'>
-                  Are you sure want to delete this post.
-                </p>
+                className={`flex flex-col gap-1 py-6 border-b-[1px] border-solid border-gray-300 justify-center items-center`}>
+                <Avatar
+                className='h-24 w-24'
+                  src={
+                    el?.profile
+                      ? `${process.env.REACT_APP_URL}/${el?.profile}`
+                      : imageurl
+                  }
+                />
+                <p className='text-sm'>unfollow @{el?.username}?.</p>
               </div>
               <div
                 className={`${divClass} cursor-pointer text-[#f00707]`}

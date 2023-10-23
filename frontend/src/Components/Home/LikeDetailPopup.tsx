@@ -49,13 +49,13 @@ export default function LikeDetailPopup({ el }: any) {
                 <div className='flex justify-between items-center' key={ind}>
                   <div className='flex items-center gap-3'>
                     <Avatar
-                      src={ele.profile ? ele.profile : imageurl}
+                      src={ele.profile ? `${process.env.REACT_APP_URL}/${ele?.profile}` : imageurl}
                       className='h-12 w-12 '
                     />
                     <div>
-                      <p className='text-sm'>gpi vishaksdfkads</p>
+                      <p className='text-sm'>{ele?.name}</p>
                       <p className='text-xs text-[rgb(115, 115, 115)]'>
-                        kadkdfkd
+                        {ele?.username}
                       </p>
                     </div>
                   </div>

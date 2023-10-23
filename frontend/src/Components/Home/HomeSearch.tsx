@@ -76,7 +76,7 @@ const HomeSearch = () => {
               <NavLink to={`/profile/${el?._id}`}>
                 <div className='flex items-center gap-3 cursor-pointer w-full hover:bg-blue-gray-200 px-6 py-2 rounded-md'>
                   <Avatar
-                    src={el?.profile ? el?.profile : imageurl}
+                    src={el?.profile ? `${process.env.REACT_APP_URL}/${el?.profile}` : imageurl}
                     className='h-11 w-11 '
                   />
                   <div>

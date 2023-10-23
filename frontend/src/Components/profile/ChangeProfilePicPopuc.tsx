@@ -32,7 +32,7 @@ const ChangeProfilePicPopuc = ({
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          fetch(`http://localhost:8080/user/updatepic`, {
+          fetch(`${process.env.REACT_APP_URL}/user/updatepic`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
