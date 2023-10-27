@@ -20,6 +20,7 @@ import { NavLink } from 'react-router-dom';
 import Create from '../../Pages/Creates';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
+import imageurl from '../../Images/userPic.jpg'
 
 export default function LgSidebar() {
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
@@ -87,7 +88,7 @@ export default function LgSidebar() {
             <ListItemPrefix>
               <Avatar
                 className='h-6 w-6'
-                src='https://i.pinimg.com/736x/98/1f/05/981f0513df876d4235b7ad3aa0c58817.jpg'
+                src={checkAuth?.profile?`${process.env.REACT_APP_URL}/${checkAuth?.profile}` : imageurl }
               />
             </ListItemPrefix>
             Profile
