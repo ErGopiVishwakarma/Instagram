@@ -1,16 +1,16 @@
 import React, { ReactNode, useState } from 'react';
 import { Avatar, Dialog, DialogBody } from '@material-tailwind/react';
 import { emitKeypressEvents } from 'readline';
-import { LikeType } from '../../Types/otherType';
+import { LikeType, PostType } from '../../Types/otherType';
 import imageurl from '../../Images/userimage.png';
 import { GrClose } from 'react-icons/gr';
+import {memo} from 'react'
 
 interface HandleFun {
-  fun: React.Dispatch<React.SetStateAction<boolean>>;
-  id: any;
+  el: PostType;
 }
 
-export default function LikeDetailPopup({ el }: any) {
+ function LikeDetailPopup({ el }: HandleFun) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
 
@@ -59,7 +59,7 @@ export default function LikeDetailPopup({ el }: any) {
                       </p>
                     </div>
                   </div>
-                  <button className='px-5 py-1 bg-[rgb(33,163,247)] text-white rounded-full'>
+                  <button className='px-5 py-1 bg-[rgb(33,163,247)] text-white rounded-full border-none outline-none'>
                     Follow
                   </button>
                 </div>
@@ -73,3 +73,5 @@ export default function LikeDetailPopup({ el }: any) {
     </>
   );
 }
+
+export default memo(LikeDetailPopup)
