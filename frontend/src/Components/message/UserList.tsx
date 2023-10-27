@@ -7,9 +7,12 @@ import NewChatSearchModal from './NewChatSearchModal';
 import { useSelector } from 'react-redux';
 import { Initial } from '../../Types/reducerType';
 import { BsArrowLeftCircle } from 'react-icons/bs';
+import { ChatType } from '../../Types/otherType';
+import '../../Styles/following .css'
+import {memo} from 'react'
 
 const UserList = () => {
-  const chatsData = useSelector((store: Initial) => store.chats);
+  const chatsData = useSelector((store: Initial) => store.chats as ChatType[]);
   return (
     <div className='w-[370px] md:w-24 lg:w-[375px] h-[100vh] border-solid border-1 border-r border-gray-400'>
       <div className='flex justify-between md:justify-center lg:justify-between w-full px-7 py-10'>
@@ -27,7 +30,7 @@ const UserList = () => {
       </div>
       <hr />
       {/* tabs code here  */}
-      <div className='w-full h-[100vh-70px] overflow-auto py-2'>
+      <div className='w-full h-[calc(100vh-120px)] overflow-y-auto py-2 customCss'>
         {/* <TabList /> */}
         {chatsData.length > 0 ? (
           chatsData?.map((el, ind) => {
@@ -41,4 +44,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default memo(UserList);
