@@ -15,15 +15,15 @@ import { FiMenu } from 'react-icons/fi';
 import { BiSolidHome, BiSolidShoppingBagAlt } from 'react-icons/bi';
 import { IconType } from 'react-icons/lib/esm/iconBase';
 import { NavLink } from 'react-router-dom';
-import imgUrl from '../../Images/userimage.png';
+import imageurl from '../../Images/userPic.jpg';
 import Create from '../../Pages/Creates';
 import SearchDrawer from './SearchDrawer';
 import { useSelector } from 'react-redux';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
 
 export default function MdSidebar() {
 
-  const checkAuth: any = useSelector((store: Initial) => store.authUser);
+  const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
 
   return (
     <Card className='h-[calc(100vh)] max-w-[4.5rem] rounded-none py-4 px-2 border-solid border-1 border-r border-gray-500 box-border align-middle'>
@@ -64,7 +64,7 @@ export default function MdSidebar() {
         </Create>
         <NavLink to={`/profile/${checkAuth._id}`}>
           <ListItem className='flex justify-center'>
-            <Avatar className='h-6 w-6' src={imgUrl} />
+            <Avatar className='h-6 w-6' src={checkAuth?.profile?`${process.env.REACT_APP_URL}/${checkAuth?.profile}` : imageurl } />
           </ListItem>
         </NavLink>
         <ListItem className='flex justify-center absolute bottom-0'>
