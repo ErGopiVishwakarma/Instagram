@@ -9,11 +9,10 @@ import SmSidebar from '../Components/sidebar/SmSidebar';
 import { Initial } from '../Types/reducerType';
 import { PostType } from '../Types/otherType';
 import HomeSearch from '../Components/Home/HomeSearch';
-
+import { Spinner } from '@material-tailwind/react';
 
 const Home = () => {
- 
-  const posts = useSelector((store:Initial)=>store.post)
+  const posts = useSelector((store: Initial) => store.post);
 
   return (
     <div className='w-full h-[100vh] flex relative '>
@@ -22,12 +21,12 @@ const Home = () => {
         <HomeSearch />
       </div>
       {/* left side bar code  */}
-      <div className='hidden md:hidden lg:block relative z-50  w-[15.5rem]'>
+      <div className={`hidden md:hidden lg:block relative z-50  w-[15.5rem] ${posts?.length > 0 ? 'opacity-100' : 'opacity-10'}`}>
         <div className='hidden md:hidden lg:block'>
-        <LgSidebar />
+          <LgSidebar />
         </div>
       </div>
-      <div className='hidden lg:hidden md:block relative z-50'>
+      <div className={`hidden lg:hidden md:block relative z-50 ${posts?.length > 0 ? 'opacity-100' : 'opacity-10'}`}>
         <MdSidebar />
       </div>
       {/* main div code of post  */}
@@ -36,14 +35,25 @@ const Home = () => {
           <div className='w-[100%]'>
             {/* <Following /> */}
             {/* all post come here  */}
-            <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
-              {
-                posts.length > 0 ? posts.map((el,ind)=>{
-                  return <Post el={el as PostType} key={ind} />
-                }):<></>
-              }
+            {posts?.length > 0 ? (
+              <div className='flex flex-col gap-2 pt-5 md:pt-0 lg:pt-0 pb-12 '>
+                {posts.length > 0 ? (
+                  posts.map((el, ind) => {
+                    return <Post el={el as PostType} key={ind} />;
+                  })
+                ) : (
+                  <></>
+                )}
               </div>
-             
+            ) : (
+              <div className=' w-full h-[100vh] flex justify-center items-center'>
+                <div className=' flex flex-col gap-1 justify-center items-center'>
+                  <Spinner className=' h-32 w-32 text-pink-400' />
+                  <p>Loading...</p>
+                  <p>If take more time please Refresh page once.</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {/* right side bar code  */}

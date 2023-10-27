@@ -1,32 +1,26 @@
 import React, { useEffect } from 'react';
-import IconSidebar from '../Components/sidebar/IconSidebar';
 import UserList from '../Components/message/UserList';
 import NotSelectPage from '../Components/message/NotSelectPage';
 import MessagePage from '../Components/message/MessagePage';
 import { Context, ContextType } from '../Routes/ContextProvider';
 import { useContext } from 'react';
 // import io from 'socket.io-client';
-import { useDispatch, useSelector } from 'react-redux';
-import { Initial } from '../Types/reducerType';
-import { getAllMessages } from '../Redux/action';
-import { ChatType, MessageType } from '../Types/otherType';
-import { UPDATEMESSAGE } from '../Redux/actionType';
 import MdSidebar from '../Components/sidebar/MdSidebar';
-
-// const backEndPoint = 'http://localhost:8080';
-// var socket: any, chatCompare: ChatType;
+import { useSelector } from 'react-redux';
+import { Initial } from '../Types/reducerType';
 
 const Message = () => {
-  const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
+  const { selectedChat} = useContext(Context) as ContextType;
+  // const a = useSelector((store:Initial)=>console.log(store))
 
   return (
     <div className='w-full h-[100vh] flex relative '>
       {/* left side bar code  */}
       <div className='flex '>
-        <div className='hidden md:block ' style={{zIndex:99999, position:'relative'}}>
+        <div className='hidden md:block '>
           <MdSidebar />
         </div>
-        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block `} style={{zIndex:99, position:'relative'}}>
+        <div className={`${!selectedChat ? 'block' : 'hidden'} md:block `}>
           <UserList />
         </div>
       </div>

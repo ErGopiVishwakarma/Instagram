@@ -136,7 +136,7 @@ export const getAllChat =
   };
 
 
-    // ===================================================add a post to server===============================================
+    // ===================================================get all post to server===============================================
     interface NewPostDispatchType {
       type: string;
       payload: PostType[];

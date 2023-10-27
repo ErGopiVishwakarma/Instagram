@@ -1,7 +1,9 @@
 import { Button, Spinner } from '@material-tailwind/react';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { Initial } from '../Types/reducerType';
 
 const Signup = () => {
   const [email, setEmail] = useState<string>('');
@@ -22,6 +24,13 @@ const Signup = () => {
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const checkAuth = useSelector((store: Initial) => store.auth);
+
+  useEffect(() => {
+    if (checkAuth) {
+      navigate('/');
+    }
+  }, []);
 
   function isValidEmail(email: string): Boolean {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

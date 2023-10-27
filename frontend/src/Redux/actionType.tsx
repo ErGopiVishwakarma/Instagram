@@ -2,6 +2,7 @@ export const AUTH: string = 'AUTH';
 export const AUTHUSER: string = 'AUTHUSER';
 export const ALLUSER: string = 'ALLUSER'
 export const ALLCHATS: string = 'ALLCHATS';
+export const UPDATEALLCHATSDATA: string = 'UPDATEALLCHATSDATA'
 export const ALLMESSAGE: string = 'ALLMESSAGE';
 export const UPDATEMESSAGE: string = 'UPDATEMESSAGE';
 export const ADDPOST : string = "ADDPOST";

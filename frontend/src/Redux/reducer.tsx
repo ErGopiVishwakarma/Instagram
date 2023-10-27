@@ -10,6 +10,7 @@ import {
   DELETEPOST,
   GETALLPOST,
   LIKEPOST,
+  UPDATEALLCHATSDATA,
   UPDATEMESSAGE,
   UPDATEUSER,
 } from './actionType';
@@ -40,6 +41,8 @@ export const reducer: Reducer<Initial, Action> = (
       return { ...state, authUser: payload };
     case ALLUSER:
       return { ...state, user: payload };
+    case UPDATEALLCHATSDATA:
+      return { ...state, chats: [payload,...state.chats] };
     case ALLCHATS:
       return { ...state, chats: payload };
     case ALLMESSAGE:
@@ -49,7 +52,7 @@ export const reducer: Reducer<Initial, Action> = (
     case GETALLPOST:
       return { ...state, post: payload };
     case ADDPOST:
-      return { ...state, post: [payload,...state.post] };
+      return { ...state, post: [payload, ...state.post] };
     case LIKEPOST:
       let filterData = state.post?.map((el) =>
         el._id !== payload._id ? el : payload,
@@ -62,7 +65,7 @@ export const reducer: Reducer<Initial, Action> = (
       let updatedUserData = state.user?.map((el) =>
         el._id !== payload._id ? el : payload,
       );
-      return  {...state, user:[...updatedUserData]}
+      return { ...state, user: [...updatedUserData] };
     default:
       return { ...state };
   }

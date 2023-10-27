@@ -1,10 +1,10 @@
 .customCss {
     &::-webkit-scrollbar {
-      width: 4px;
+      width: 2px;
     }
   
     &::-webkit-scrollbar-track {
-      width: 6px;
+      width: 3px;
     }
   
     &::-webkit-scrollbar-thumb {

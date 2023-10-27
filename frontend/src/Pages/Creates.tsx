@@ -18,6 +18,7 @@ import { Initial } from '../Types/reducerType';
 import { PostType } from '../Types/otherType';
 import { AxiosResponse } from 'axios';
 import { ADDPOST } from '../Redux/actionType';
+import { getAllPost } from '../Redux/action';
 
 interface Children {
   children: ReactNode;
@@ -129,7 +130,8 @@ export default function Create({ children }: Children) {
       .then((res: AxiosResponse<PostType>) => {
         const postData: any = res;
          setLoading(false)
-        dispatch({ type: ADDPOST, payload: postData });
+        // dispatch({ type: ADDPOST, payload: postData });
+        getAllPost(data.token,dispatch)()
       })
       .catch((err: any) => {
       setLoading(false);
