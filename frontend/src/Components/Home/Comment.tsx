@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import { BsEmojiFrown } from 'react-icons/bs';
 import LikeDetailPopup from './LikeDetailPopup';
 import { AxiosResponse } from 'axios';
-import { PostType } from '../../Types/otherType';
+import { CommentType, LikeType, PostType } from '../../Types/otherType';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMMENTPOST, LIKEPOST } from '../../Redux/actionType';
 import ViewAllCommentPopup from './ViewAllCommentPopup';
+import {memo} from 'react'
 
-const Comment = ({ el }: any) => {
+interface PostDataType {
+  el:PostType
+}
+
+const Comment = ({ el }: PostDataType) => {
   const [text, setText] = useState<string>('');
   const data = useSelector((store: Initial) => store.localStorageData);
   const dispatch = useDispatch();
+  let commentedBy = el?.comments as LikeType[]
 
   const commentOnPost = (id: string) => {
     fetch(`${process.env.REACT_APP_URL}/post/comment/${id}`, {
@@ -33,7 +39,6 @@ const Comment = ({ el }: any) => {
       });
   };
   const callFun = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       commentOnPost(el?._id);
       setText('');
@@ -49,14 +54,14 @@ const Comment = ({ el }: any) => {
           <span className=' font-bold cursor-pointer'>
             {el?.likes[0].username}
           </span>{' '}
-          and <LikeDetailPopup el={el} />
+          and <LikeDetailPopup el={el as PostType} />
         </p>
       ) : (
         <></>
       )}
       {el?.comments?.length > 0 ? (
         <>
-          <p>commented by <span className='font-bold'>{el.comments[0].commentedBy?.username}</span> and others</p>
+          <p>commented by <span className='font-bold'>{commentedBy[0]?.username}</span> and others</p>
           <ViewAllCommentPopup el={el as PostType}>view all {el?.comments?.length} comments</ViewAllCommentPopup>
         </>
       ) : (
@@ -77,4 +82,4 @@ const Comment = ({ el }: any) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);
