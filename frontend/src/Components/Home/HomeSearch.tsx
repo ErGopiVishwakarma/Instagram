@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useSelector } from 'react-redux';
 import imageurl from '../../Images/userPic.jpg';
+import {memo} from 'react'
 
 const HomeSearch = () => {
   const [searchVisible, setSearchVisible] = useState<boolean>(false);
@@ -102,4 +103,4 @@ const HomeSearch = () => {
   );
 };
 
-export default HomeSearch;
+export default memo(HomeSearch);
