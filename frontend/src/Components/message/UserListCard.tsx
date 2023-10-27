@@ -5,11 +5,14 @@ import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { Context, ContextType } from '../../Routes/ContextProvider';
 import { useContext } from 'react'
+import imageurl from '../../Images/userPic.jpg'
+import {memo} from 'react'
+
 
 const UserListCard = ({ el }: any) => {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
-  const authUser: any = useSelector((store: Initial) => store.authUser);
-  const user = el.users[0]._id === authUser._id ? el.users[1] : el.users[0];
+  const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
+  const user = el?.users[0]._id === authUser?._id ? el?.users[1] : el.users[0];
 
   return (
     <div
@@ -24,33 +27,33 @@ const UserListCard = ({ el }: any) => {
       <div className='block md:hidden lg:block'>
         <Avatar
           src={
-            user.profile
-              ? user.profile
-              : 'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'
+            user?.profile
+              ? `${process.env.REACT_APP_URL}/${user?.profile}`
+              : imageurl
           }
           className='h-12 w-12'
         />
       </div>
       <div className='block md:hidden lg:block'>
-        <p className=' text-sm'>{user.name}</p>
-        <p className=' text-xs'>{user.username}</p>
+        <p className=' text-sm'>{user?.name}</p>
+        <p className=' text-xs'>{user?.username}</p>
       </div>
 
       <div className='hidden md:flex lg:hidden gap-2 items-center flex-col'>
         <div className='w-16'>
           <Avatar
             src={
-              user.profile
-                ? user.profile
-                : 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80'
+              user?.profile
+                ? `${process.env.REACT_APP_URL}/${user?.profile}`
+                : imageurl
             }
             className='h-16 w-16 border-solid border-2 border-red-400'
           />
         </div>
-        <p className=' text-xs'>{user.name}</p>
+        <p className=' text-xs text-center'>{user?.name}</p>
       </div>
     </div>
   );
 };
 
-export default UserListCard;
+export default memo(UserListCard);
