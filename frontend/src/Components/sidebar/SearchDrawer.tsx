@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { NavLink } from 'react-router-dom';
 import imageurl from '../../Images/userPic.jpg';
+import SearchSkelton from '../skelton/SearchSkelton';
 
 interface Children {
   children: ReactNode;
@@ -32,6 +33,7 @@ export default function SearchDrawer({ children }: Children) {
   const data = useSelector((store: Initial) => store.localStorageData);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchData, setSearchData] = useState<AuthUser[] | []>([]);
+  const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
 
   function debounce(func: (text: string) => void, delay: number) {
     let timer: any;
@@ -93,9 +95,11 @@ export default function SearchDrawer({ children }: Children) {
             </Typography>
           </div>
           <List className='box-border min-w-0 w-full h-full p-0 align-middle gap-1 relative'>
-            <ListItem className='flex justify-center'>
-              <BiSolidHome className='h-6 w-6' />
-            </ListItem>
+            <NavLink to='/'>
+              <ListItem className='flex justify-center'>
+                <BiSolidHome className='h-6 w-6' />
+              </ListItem>
+            </NavLink>
             <ListItem className='flex justify-center' onClick={closeDrawer}>
               <BsSearch className='h-6 w-6' />
             </ListItem>
@@ -105,18 +109,32 @@ export default function SearchDrawer({ children }: Children) {
             <ListItem className='flex justify-center'>
               <GoVideo className='h-6 w-6' />
             </ListItem>
+            <NavLink to='/message'>
             <ListItem className='flex justify-center'>
               <PiTelegramLogoBold className='h-6 w-6' />
             </ListItem>
+            </NavLink>
             <ListItem className='flex justify-center'>
               <AiOutlineHeart className='h-6 w-6' />
             </ListItem>
-            <ListItem className='flex justify-center'>
-              <GrAddCircle className='h-6 w-6' />
-            </ListItem>
-            <ListItem className='flex justify-center'>
-              <Avatar className='h-6 w-6' />
-            </ListItem>
+            <NavLink to='/create'>
+              <ListItem className='flex justify-center'>
+                <GrAddCircle className='h-6 w-6' />
+              </ListItem>
+            </NavLink>
+            <NavLink to={`/profile/${checkAuth?._id}`}>
+              <ListItem className='flex justify-center'>
+                <Avatar
+                  className='h-6 w-6'
+                  src={
+                    checkAuth?.profile
+                      ? `${process.env.REACT_APP_URL}/${checkAuth?.profile}`
+                      : imageurl
+                  }
+                />
+              </ListItem>
+            </NavLink>
+
             <ListItem className='flex justify-center absolute bottom-0'>
               <FiMenu className='h-6 w-6' />
             </ListItem>
@@ -136,25 +154,29 @@ export default function SearchDrawer({ children }: Children) {
             </div>
           </div>
           <div className='w-full h-[calc(100vh - 150px)] flex flex-col p-3  '>
-            {searchData.length > 0 ? (
+            {loading ? (
+              <SearchSkelton />
+            ) : searchData.length > 0 ? (
               searchData?.map((el) => {
                 return (
-
-                    <NavLink to={`/profile/${el._id}`}>
-                      <div className='flex items-center gap-3 cursor-pointer w-full hover:bg-blue-gray-200 px-6 py-2 rounded-md'>
-                        <Avatar
-                          src={el?.profile ? el?.profile : imageurl}
-                          className='h-11 w-11 '
-                        />
-                        <div>
-                          <p className='text-sm'>{el?.name}</p>
-                          <p className='text-xs text-[rgb(115, 115, 115)]'>
-                            {el?.username}
-                          </p>
-                        </div>
+                  <NavLink to={`/profile/${el._id}`}>
+                    <div className='flex items-center gap-3 cursor-pointer w-full hover:bg-blue-gray-200 px-6 py-2 rounded-md'>
+                      <Avatar
+                        src={
+                          el?.profile
+                            ? `${process.env.REACT_APP_URL}/${el?.profile}`
+                            : imageurl
+                        }
+                        className='h-11 w-11 '
+                      />
+                      <div>
+                        <p className='text-sm'>{el?.name}</p>
+                        <p className='text-xs text-[rgb(115, 115, 115)]'>
+                          {el?.username}
+                        </p>
                       </div>
-                    </NavLink>
-  
+                    </div>
+                  </NavLink>
                 );
               })
             ) : (
