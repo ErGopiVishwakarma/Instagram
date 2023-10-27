@@ -7,10 +7,15 @@ import { PiTelegramLogoBold } from 'react-icons/pi';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { likePost } from '../../Redux/action';
-import { LikeType } from '../../Types/otherType';
+import { LikeType, PostType } from '../../Types/otherType';
+import {memo} from 'react'
 
-const Likeshare = ({ el }: any) => {
-  const authUser: any = useSelector((store: Initial) => store.authUser);
+interface PostDataType {
+  el:PostType
+}
+
+const Likeshare = ({ el }: PostDataType) => {
+  const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
   const data = useSelector((store: Initial) => store.localStorageData);
   const dispatch = useDispatch();
 
@@ -54,4 +59,4 @@ const Likeshare = ({ el }: any) => {
   );
 };
 
-export default Likeshare;
+export default memo(Likeshare);
