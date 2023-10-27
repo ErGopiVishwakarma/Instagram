@@ -1,5 +1,5 @@
 import { Avatar } from '@material-tailwind/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { BsArrowLeftCircle, BsExclamationCircle } from 'react-icons/bs';
 import Messages from './Messages';
 import { AiOutlineSend } from 'react-icons/ai';
@@ -12,6 +12,7 @@ import axios from 'axios';
 import { UPDATEMESSAGE } from '../../Redux/actionType';
 import io from 'socket.io-client';
 import { getAllMessages } from '../../Redux/action';
+import imageurl from '../../Images/userPic.jpg';
 
 const backEndPoint = `${process.env.REACT_APP_URL}`;
 var socket: any, chatCompare: ChatType;
@@ -19,13 +20,11 @@ var socket: any, chatCompare: ChatType;
 const MessagePage = () => {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
   const [newMessage, setNewMessage] = useState<string>('');
-  const authUser: any = useSelector((store: Initial) => store.authUser);
+  const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
   const [messageRender, setMessageRender] = useState<boolean>(false);
   const [socketConnected, setSocketConnected] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const token: string = useSelector(
-    (store: Initial) => store.localStorageData.token,
-  );
+  const token = useSelector((store: Initial) => store.localStorageData.token);
   let value: any = selectedChat;
   const user =
     value && value.users[0]._id === authUser._id
@@ -48,19 +47,24 @@ const MessagePage = () => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.off('newMessage')
-    socket.once('newMessage', (returnMessage: MessageType) => {
+    const handleNewMessage = (returnMessage: MessageType) => {
+      console.log('render time count');
       if (!chatCompare || value._id !== returnMessage.chatId) {
-        //give notification
+        // give notification
       } else {
         dispatch({ type: UPDATEMESSAGE, payload: returnMessage });
       }
-      // socket.on('recieveMessage', arguments.callee)
-    });
-  },[messageRender]);
+    };
+
+    socket.on('newMessage', handleNewMessage);
+
+    return () => {    
+      socket.off('newMessage', handleNewMessage);
+    };
+  });
 
   // sending message code
-  const sendMessage = async () => { 
+  const sendMessage = async () => {
     if (newMessage) {
       try {
         const config = {
@@ -91,7 +95,7 @@ const MessagePage = () => {
       }
     } else {
       alert('please write something ..');
-      return
+      return;
     }
   };
 
@@ -114,8 +118,8 @@ const MessagePage = () => {
           <Avatar
             src={
               user.profile
-                ? user.profile
-                : 'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'
+                ? `${process.env.REACT_APP_URL}/${user.profile}`
+                : imageurl
             }
             className='h-10 w-10'
           />
@@ -145,4 +149,4 @@ const MessagePage = () => {
   );
 };
 
-export default MessagePage;
+export default memo(MessagePage);
