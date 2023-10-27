@@ -11,19 +11,24 @@ import { PostType } from '../../Types/otherType';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
+import {memo} from 'react'
 
-const Post = ({el}:any) => {
+interface PostDataType {
+  el:PostType
+}
+
+const Post = ({el}:PostDataType) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [userPostData, setUserPostData] = useState<PostType[] | []>();
   const data = useSelector((store: Initial) => store.localStorageData);
   const date: any = new Date();
-  const postDate: any = new Date(`${el.createdAt}`);
+  const postDate: any = new Date(`${el?.createdAt}`);
   let hour = Math.floor((date - postDate) / 1000 / 3600);
   let day = postDate.getDate();
   let month = postDate
     .toLocaleString('default', { month: 'long' })
     .substring(0, 3);
-
+  let postedBy = el.postedBy as AuthUser
 
   
     const getUserPost = (id: string | undefined, token: string) => {
@@ -55,19 +60,19 @@ const Post = ({el}:any) => {
         {/* user post code here  */}
         <div className='flex items-center justify-between pb-2 relative'>
           {/* =======================================navigate link here to go profile page========================================  */}
-          <NavLink to={`/profile/${el?.postedBy?._id}`}>
+          <NavLink to={`/profile/${postedBy?._id}`}>
             <div
               className='flex gap-2 items-center'
               onMouseOver={() =>{
-                getUserPost(el?.postedBy?._id,data.token)
+                getUserPost(postedBy?._id,data.token)
                  setShowPopup(true)
                 }}
               onMouseOut={() => setShowPopup(false)}>
               <Avatar
-                src={el.postedBy?.profile ? `${process.env.REACT_APP_URL}/${el.postedBy?.profile}` : userPick}
+                src={postedBy?.profile ? `${process.env.REACT_APP_URL}/${postedBy?.profile}` : userPick}
                 className='h-9 w-9'
               />
-              <p className='text-sm'>{el.postedBy?.username}</p>
+              <p className='text-sm'>{postedBy?.username}</p>
               {hour < 24 ? (
                 <p className=' text-xs'>{hour}h ago</p>
               ) : (
@@ -85,7 +90,7 @@ const Post = ({el}:any) => {
             />
           </div>
           {/*==========================this is the right side three dot for show menu which will contain the lile delete follow etc========================  */}
-          <PostThreeDotModal el={el} />
+          <PostThreeDotModal el={el as PostType} />
           
         </div>
 
@@ -99,12 +104,12 @@ const Post = ({el}:any) => {
       </div>
       <div>
         {/* ============================================like functionality is here==========================================  */}
-        <Likeshare el={el} />
+        <Likeshare el={el as PostType} />
         {/*================================= comment part here ================================= */}
-        <Comment el={el} />
+        <Comment el={el as PostType} />
       </div>
     </div>
   );
 };
 
-export default Post;
+export default memo(Post);
