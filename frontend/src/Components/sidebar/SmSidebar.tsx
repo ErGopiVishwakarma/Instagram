@@ -7,11 +7,12 @@ import { MdOutlineExplore } from 'react-icons/md';
 import { PiTelegramLogoBold } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
+import imageurl from '../../Images/userPic.jpg';
 
 const SmSidebar = () => {
 
-  const checkAuth: any = useSelector((store: Initial) => store.authUser);
+  const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
 
   return (
     <div className='w-full flex sm:flex md:hidden lg:hidden justify-evenly absolute bottom-0 z-10 bg-white border-t border-gray-400'>
@@ -30,7 +31,7 @@ const SmSidebar = () => {
           <GoVideo className='h-5 w-5' />
         </ListItem>
       </NavLink>
-      <NavLink to=''>
+      <NavLink to='/create'>
         <ListItem className='flex justify-center'>
           <GrAddCircle className='h-5 w-5' />
         </ListItem>
@@ -43,7 +44,7 @@ const SmSidebar = () => {
       <NavLink to={`/profile/${checkAuth._id}`}>
         <ListItem className='flex justify-center'>
           <Avatar
-            src='https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80'
+            src={checkAuth?.profile?`${process.env.REACT_APP_URL}/${checkAuth?.profile}` : imageurl }
             className='h-5 w-5'
           />
         </ListItem>
