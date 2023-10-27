@@ -5,12 +5,13 @@ import { AxiosResponse } from 'axios';
 import { Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { DELETEPOST } from '../../Redux/actionType';
+import {memo} from 'react'
 
 interface HandleFun {
   id:any
 }
 
-export default function DeletePostPopup({ id }: HandleFun) {
+ function DeletePostPopup({ id }: HandleFun) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
   const data = useSelector((store: Initial) => store.localStorageData);
@@ -77,3 +78,5 @@ export default function DeletePostPopup({ id }: HandleFun) {
     </>
   );
 }
+
+export default memo(DeletePostPopup);
