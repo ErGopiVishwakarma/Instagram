@@ -8,6 +8,7 @@ import { PostType } from '../../Types/otherType';
 import { useDispatch, useSelector } from 'react-redux';
 import { UPDATEUSER } from '../../Redux/actionType';
 import { Dialog, DialogBody } from '@material-tailwind/react';
+import {memo} from 'react'
 
 interface TypeForThis {
   el: AuthUser;
@@ -256,4 +257,4 @@ const HoverPopupForSuggestProfile = ({ el, ind }: TypeForThis) => {
   );
 };
 
-export default HoverPopupForSuggestProfile;
+export default memo(HoverPopupForSuggestProfile);
