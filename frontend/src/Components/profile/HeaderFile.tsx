@@ -3,7 +3,7 @@ import { FiSearch } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
-import { LikeType, PostType } from '../../Types/otherType';
+import { CommentType, LikeType, PostType } from '../../Types/otherType';
 import { BiSolidUser, BiUser, BiUserPlus } from 'react-icons/bi';
 import { BsThreeDots } from 'react-icons/bs';
 import userPic from '../../Images/userPic.jpg';
@@ -11,6 +11,8 @@ import { AxiosResponse } from 'axios';
 import { Spinner } from '@material-tailwind/react';
 import UnfollowPopup from '../Home/UnfollowPopup';
 import ChangeProfilePicPopuc from './ChangeProfilePicPopuc';
+import SeeFollowerFollowingUser from './SeeFollowerFollowingUser';
+import {memo} from 'react'
 
 interface PropType {
   userData: AuthUser;
@@ -19,7 +21,7 @@ interface PropType {
   setAgainRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function HeaderFile({
+function HeaderFile({
   userData,
   userPostData,
   setUserData,
@@ -141,13 +143,13 @@ export default function HeaderFile({
             <span className='font-bold text-base'>
               {userData?.followers?.length}
             </span>{' '}
-            Followers
+            <SeeFollowerFollowingUser el={userData?.followers as LikeType[]} text={"Followers" as string} />
           </p>
           <p>
             <span className='font-bold text-base'>
               {userData?.followings?.length}
             </span>{' '}
-            Following
+            <SeeFollowerFollowingUser el={userData?.followings as LikeType[]} text={'Following' as string} />
           </p>
         </div>
         <p className='text-sm'>{userData?.name}</p>
@@ -156,3 +158,5 @@ export default function HeaderFile({
     </header>
   );
 }
+
+export default memo(HeaderFile)
