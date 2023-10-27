@@ -6,6 +6,8 @@ import HoverPopupForSuggestProfile from './HoverPopupForSuggestProfile';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { NavLink } from 'react-router-dom';
+import SearchSkelton from '../skelton/SearchSkelton';
+import {memo} from 'react'
 
 const SuggestedProfile = () => {
   const suggestedUser = useSelector(
@@ -19,7 +21,11 @@ const SuggestedProfile = () => {
         <NavLink to={`/profile/${authUser?._id}`}>
           <div className='flex items-center gap-3 cursor-pointer'>
             <Avatar
-              src={authUser?.profile ? `${process.env.REACT_APP_URL}/${authUser?.profile}` : imageurl}
+              src={
+                authUser?.profile
+                  ? `${process.env.REACT_APP_URL}/${authUser?.profile}`
+                  : imageurl
+              }
               className='h-11 w-11 '
             />
             <div>
@@ -39,7 +45,7 @@ const SuggestedProfile = () => {
           <p className='text-sm'>Suggested for you</p>
           <p className='text-xs'>See All</p>
         </div>
-        {suggestedUser.length > 0 ?
+        {suggestedUser.length > 0 ? (
           suggestedUser?.map((el, ind) => {
             return (
               <HoverPopupForSuggestProfile
@@ -48,8 +54,12 @@ const SuggestedProfile = () => {
                 key={ind}
               />
             );
-          }):<></>
-        }
+          })
+        ) : (
+          <>
+            <SearchSkelton />
+          </>
+        )}
       </div>
       <div className=' pt-10'>
         <a>
@@ -66,4 +76,4 @@ const SuggestedProfile = () => {
   );
 };
 
-export default SuggestedProfile;
+export default memo(SuggestedProfile);
