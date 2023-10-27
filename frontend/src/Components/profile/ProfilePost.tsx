@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { PostType } from '../../Types/otherType';
+import {memo} from 'react'
 
 const ProfilePost = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +29,7 @@ const ProfilePost = () => {
   useEffect(() => {
     let userDetail = allUser && allUser?.find((el, ind) => el._id === id);
     let postDetail =
-      allPost && allPost?.filter((el: any, ind) => el?.postedBy?._id === id);
+      allPost && allPost?.filter((el:any, ind) => el?.postedBy?._id === id);
     setPost(postDetail);
     setUserData(userDetail);
   }, [id, allPost, allUser]);
@@ -199,4 +200,4 @@ const ProfilePost = () => {
   );
 };
 
-export default ProfilePost;
+export default memo(ProfilePost);
