@@ -1,9 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import { Avatar, Dialog, DialogBody } from '@material-tailwind/react';
-import { PostType } from '../../Types/otherType';
-import { AxiosResponse } from 'axios';
-import { AuthUser, Initial } from '../../Types/reducerType';
-import { useDispatch, useSelector } from 'react-redux';
+import {  Initial } from '../../Types/reducerType';
+import { useSelector } from 'react-redux';
+import {memo} from 'react'
 
 interface ProfileImagePopupType {
   children: ReactNode;
@@ -108,4 +107,4 @@ const ChangeProfilePicPopuc = ({
   );
 };
 
-export default ChangeProfilePicPopuc;
+export default memo(ChangeProfilePicPopuc);
