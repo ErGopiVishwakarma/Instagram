@@ -4,6 +4,7 @@ import { PostType } from '../../Types/otherType';
 import { AxiosResponse } from 'axios';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
+import {memo} from 'react'
 
 
 interface UnfolowPopupType {
@@ -86,4 +87,4 @@ const UnfollowPopup = ({children,setLoading,userId,setUserData}:UnfolowPopupType
   )
 }
 
-export default UnfollowPopup
+export default memo(UnfollowPopup)
