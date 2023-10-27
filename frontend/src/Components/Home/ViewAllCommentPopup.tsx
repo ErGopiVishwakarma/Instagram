@@ -7,20 +7,21 @@ import {
 } from '@material-tailwind/react';
 import { emitKeypressEvents } from 'readline';
 import { CommentType, LikeType, PostType } from '../../Types/otherType';
-import imageurl from '../../Images/userimage.png';
+import imageurl from '../../Images/userPic.jpg';
 import { GrClose } from 'react-icons/gr';
 import { BsHeart } from 'react-icons/bs';
 import { AxiosResponse } from 'axios';
 import { LIKEPOST } from '../../Redux/actionType';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
+import {memo} from 'react'
 
 interface CommentPopupType {
   el:PostType;
   children:ReactNode
 }
 
-export default function ViewAllCommentPopup({ el,children }:CommentPopupType) {
+function ViewAllCommentPopup({ el,children }:CommentPopupType) {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
   const [text, setText] = useState<string>('');
@@ -70,7 +71,7 @@ export default function ViewAllCommentPopup({ el,children }:CommentPopupType) {
       <Dialog open={open} handler={handleOpenFun} size='sm' style={{border:'none',outline:'none'}}>
         <div className={`flex items-center justify-between px-5 py-3  `}>
           <div className='flex gap-4 items-center'>
-            <Avatar className='h-12 w-12' src={postedBy ? postedBy?.profile : imageurl} />
+            <Avatar className='h-12 w-12' src={postedBy ? `${process.env.REACT_APP_URL}/${postedBy?.profile}` : imageurl} />
             <p className='text-sm text-center font-bold'>
               {postedBy?.username}
             </p>
@@ -93,7 +94,7 @@ export default function ViewAllCommentPopup({ el,children }:CommentPopupType) {
                   className='flex justify-between gap-4 items-start'
                   key={ind}>
                   <Avatar
-                    src={ele.profile ? ele?.profile : imageurl}
+                    src={ele?.commentedBy.profile ? `${process.env.REACT_APP_URL}/${ele?.commentedBy.profile}` : imageurl}
                     className='h-10 w-10 '
                   />
                   <div className='w-full pt-1'>
@@ -130,3 +131,5 @@ export default function ViewAllCommentPopup({ el,children }:CommentPopupType) {
     </>
   );
 }
+
+export default memo(ViewAllCommentPopup)
