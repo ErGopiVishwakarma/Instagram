@@ -20,6 +20,7 @@ import { AuthUser, Initial } from '../../Types/reducerType';
 import { NavLink } from 'react-router-dom';
 import imageurl from '../../Images/userPic.jpg';
 import SearchSkelton from '../skelton/SearchSkelton';
+import LogOut from '../../Pages/LogOut';
 
 interface Children {
   children: ReactNode;
@@ -110,9 +111,9 @@ export default function SearchDrawer({ children }: Children) {
               <GoVideo className='h-6 w-6' />
             </ListItem>
             <NavLink to='/message'>
-            <ListItem className='flex justify-center'>
-              <PiTelegramLogoBold className='h-6 w-6' />
-            </ListItem>
+              <ListItem className='flex justify-center'>
+                <PiTelegramLogoBold className='h-6 w-6' />
+              </ListItem>
             </NavLink>
             <ListItem className='flex justify-center'>
               <AiOutlineHeart className='h-6 w-6' />
@@ -135,9 +136,11 @@ export default function SearchDrawer({ children }: Children) {
               </ListItem>
             </NavLink>
 
-            <ListItem className='flex justify-center absolute bottom-0'>
-              <FiMenu className='h-6 w-6' />
-            </ListItem>
+            <LogOut>
+              <ListItem className='flex justify-center absolute bottom-0'>
+                <FiMenu className='h-6 w-6' />
+              </ListItem>
+            </LogOut>
           </List>
         </Card>
         <div

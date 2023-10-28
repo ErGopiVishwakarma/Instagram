@@ -135,7 +135,7 @@ const Signup = () => {
             fontFamily:
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           }}>
-          Instagram
+          Myinsta
         </h1>
         <p className=' text-base text-#737373'>
           Sign up to see photos and videos from your friends.

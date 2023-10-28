@@ -15,6 +15,7 @@ interface Children {
   children: ReactNode;
 }
 
+
 export default function NewChatSearchModal({ children }: Children) {
   const { selectedChat, setSelectedChat } = useContext(Context) as ContextType;
   const chats = useSelector((store: Initial) => store.chats as ChatType[]);
@@ -52,7 +53,7 @@ export default function NewChatSearchModal({ children }: Children) {
   };
 
   // create new chat code
-  const createNewChat = async (userId: string) => {
+ const createNewChat = async (userId: string) => {
     try {
       setChatLoading(true);
       let userObj = {

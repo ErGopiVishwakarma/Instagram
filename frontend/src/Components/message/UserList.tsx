@@ -5,7 +5,7 @@ import { Avatar } from '@material-tailwind/react';
 import UserListCard from './UserListCard';
 import NewChatSearchModal from './NewChatSearchModal';
 import { useSelector } from 'react-redux';
-import { Initial } from '../../Types/reducerType';
+import { AuthUser, Initial } from '../../Types/reducerType';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { ChatType } from '../../Types/otherType';
 import '../../Styles/following .css'
@@ -13,6 +13,7 @@ import {memo} from 'react'
 
 const UserList = () => {
   const chatsData = useSelector((store: Initial) => store.chats as ChatType[]);
+  const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
   return (
     <div className='w-[370px] md:w-24 lg:w-[375px] h-[100vh] border-solid border-1 border-r border-gray-400'>
       <div className='flex justify-between md:justify-center lg:justify-between w-full px-7 py-10'>
@@ -21,7 +22,7 @@ const UserList = () => {
           className='block md:hidden lg:hidden'>
           <BsArrowLeftCircle className='h-6 w-6' />
         </div>
-        <p className='block md:hidden lg:block'>gopi_v777</p>
+        <p className='block md:hidden lg:block text-xl font-bold'>{authUser?.username}</p>
         <div className=' cursor-pointer'>
           <NewChatSearchModal>
             <FiEdit className='h-6 w-6' />

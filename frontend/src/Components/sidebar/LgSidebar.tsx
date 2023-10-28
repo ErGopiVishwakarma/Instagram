@@ -21,6 +21,7 @@ import Create from '../../Pages/Creates';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import imageurl from '../../Images/userPic.jpg'
+import LogOut from '../../Pages/LogOut';
 
 export default function LgSidebar() {
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
@@ -29,7 +30,7 @@ export default function LgSidebar() {
     <Card className='h-[calc(100vh)] w-full max-w-[15.5rem] rounded-none py-4 px-2 shadow-xl shadow-blue-gray-900/5 border-r border-gray-400 sticky top-0 '>
       <div className='mb-2 p-4'>
         <Typography variant='h4' color='blue-gray'>
-          Instagram
+          Myinsta
         </Typography>
       </div>
       <List className='gap-2'>
@@ -94,12 +95,14 @@ export default function LgSidebar() {
             Profile
           </ListItem>
         </NavLink>
-        <ListItem>
+       <LogOut>
+       <ListItem>
           <ListItemPrefix>
             <FiMenu className='h-6 w-6' />
           </ListItemPrefix>
-          More
+          Logout
         </ListItem>
+       </LogOut>
       </List>
     </Card>
   );

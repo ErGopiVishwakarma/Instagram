@@ -1,57 +1,27 @@
 import React, { ReactNode, useState } from 'react';
 import { Avatar, Dialog, DialogBody } from '@material-tailwind/react';
-import { PostType } from '../../Types/otherType';
-import { AxiosResponse } from 'axios';
-import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { memo } from 'react';
-import imageurl from '../../Images/userPic.jpg'
+import imageurl from '../Images/userPic.jpg'
+import { AuthUser, Initial } from '../Types/reducerType';
+import { useNavigate } from 'react-router-dom';
 
-interface UnfolowPopupType {
+interface Children {
   children: ReactNode;
-  userId: string | undefined;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setUserData: React.Dispatch<React.SetStateAction<AuthUser | undefined>>;
-  userData:AuthUser;
 }
 
-const UnfollowPopup = ({
-  children,
-  setLoading,
-  userId,
-  setUserData,
-  userData
-}: UnfolowPopupType) => {
+const LogOut = ({ children }: Children) => {
   const [open, setOpen] = useState<boolean>(false);
   const handleOpenFun = () => setOpen(!open);
-  const data = useSelector((store: Initial) => store.localStorageData);
-  const dispatch = useDispatch();
+  const authUser = useSelector((store: Initial) => store.authUser as AuthUser);
+  const navigate = useNavigate();
 
-  // follow to user function
-  const unFollowFun = () => {
-    const config = {
-      unfollowId: userId,
-    };
-    setLoading(true);
-    fetch(`${process.env.REACT_APP_URL}/user/unfollow`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${data?.token}`,
-      },
-      body: JSON.stringify(config),
-    })
-      .then((ress) => ress.json())
-      .then((res: AxiosResponse<AuthUser>) => {
-        const userData: any = res;
-        setLoading(false);
-        setUserData(userData);
-      })
-      .catch((err: any) => {
-        setLoading(false);
-        console.log(err);
-      });
+  const handleLogout = () => {
+    localStorage.removeItem('xx12insta@123auth1t3ork0en');
+    window.location.reload()
+    navigate('/login');
   };
+
   const divClass =
     'flex items-center justify-center p-3 border-b-[1px] border-solid border-gray-300 hover:bg-gray-300 rounded-lg text-[15px]';
   return (
@@ -79,20 +49,20 @@ const UnfollowPopup = ({
             <Avatar
               className='h-24 w-24'
               src={
-                userData?.profile
-                  ? `${process.env.REACT_APP_URL}/${userData?.profile}`
+                authUser?.profile
+                  ? `${process.env.REACT_APP_URL}/${authUser?.profile}`
                   : imageurl
               }
             />
-            <p className='text-sm'>unfollow @{userData?.username}?.</p>
+            <p className='text-sm'>{authUser?.username}?.</p>
           </div>
           <div
             className={`${divClass} cursor-pointer text-[#f00707]`}
             onClick={() => {
               handleOpenFun();
-              unFollowFun();
+              handleLogout()
             }}>
-            <p>Unfollow</p>
+            <p>LogOut</p>
           </div>
           <div
             className={`${divClass} cursor-pointer text-black`}
@@ -105,4 +75,4 @@ const UnfollowPopup = ({
   );
 };
 
-export default memo(UnfollowPopup);
+export default memo(LogOut);

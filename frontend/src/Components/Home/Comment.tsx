@@ -7,17 +7,18 @@ import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { COMMENTPOST, LIKEPOST } from '../../Redux/actionType';
 import ViewAllCommentPopup from './ViewAllCommentPopup';
-import {memo} from 'react'
+import { memo } from 'react';
+import toast from 'react-hot-toast';
 
 interface PostDataType {
-  el:PostType
+  el: PostType;
 }
 
 const Comment = ({ el }: PostDataType) => {
   const [text, setText] = useState<string>('');
   const data = useSelector((store: Initial) => store.localStorageData);
   const dispatch = useDispatch();
-  let commentedBy = el?.comments as LikeType[]
+  let commentedBy = el?.comments as LikeType[];
 
   const commentOnPost = (id: string) => {
     fetch(`${process.env.REACT_APP_URL}/post/comment/${id}`, {
@@ -61,8 +62,14 @@ const Comment = ({ el }: PostDataType) => {
       )}
       {el?.comments?.length > 0 ? (
         <>
-          <p>commented by <span className='font-bold'>{commentedBy[0]?.username}</span> and others</p>
-          <ViewAllCommentPopup el={el as PostType}>view all {el?.comments?.length} comments</ViewAllCommentPopup>
+          <p>
+            commented by{' '}
+            <span className='font-bold'>{commentedBy[0]?.username}</span> and
+            others
+          </p>
+          <ViewAllCommentPopup el={el as PostType}>
+            view all {el?.comments?.length} comments
+          </ViewAllCommentPopup>
         </>
       ) : (
         <></>

@@ -109,7 +109,7 @@ const Login = () => {
             fontFamily:
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           }}>
-          Instagram
+          Myinsta
         </h1>
         <p className=' text-base text-#737373'>
           Lon in to see photos and videos from your friends.

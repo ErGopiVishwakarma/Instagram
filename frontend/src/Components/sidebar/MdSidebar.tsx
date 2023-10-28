@@ -20,9 +20,9 @@ import Create from '../../Pages/Creates';
 import SearchDrawer from './SearchDrawer';
 import { useSelector } from 'react-redux';
 import { AuthUser, Initial } from '../../Types/reducerType';
+import LogOut from '../../Pages/LogOut';
 
 export default function MdSidebar() {
-
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
 
   return (
@@ -64,12 +64,21 @@ export default function MdSidebar() {
         </Create>
         <NavLink to={`/profile/${checkAuth._id}`}>
           <ListItem className='flex justify-center'>
-            <Avatar className='h-6 w-6' src={checkAuth?.profile?`${process.env.REACT_APP_URL}/${checkAuth?.profile}` : imageurl } />
+            <Avatar
+              className='h-6 w-6'
+              src={
+                checkAuth?.profile
+                  ? `${process.env.REACT_APP_URL}/${checkAuth?.profile}`
+                  : imageurl
+              }
+            />
           </ListItem>
         </NavLink>
-        <ListItem className='flex justify-center absolute bottom-0'>
-          <FiMenu className='h-6 w-6' />
-        </ListItem>
+        <LogOut>
+          <ListItem className='flex justify-center absolute bottom-0'>
+            <FiMenu className='h-6 w-6' />
+          </ListItem>
+        </LogOut>
       </List>
     </Card>
   );

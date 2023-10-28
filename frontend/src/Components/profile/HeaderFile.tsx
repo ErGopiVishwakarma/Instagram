@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AuthUser, Initial } from '../../Types/reducerType';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentType, LikeType, PostType } from '../../Types/otherType';
@@ -13,6 +13,7 @@ import UnfollowPopup from '../Home/UnfollowPopup';
 import ChangeProfilePicPopuc from './ChangeProfilePicPopuc';
 import SeeFollowerFollowingUser from './SeeFollowerFollowingUser';
 import {memo} from 'react'
+
 
 interface PropType {
   userData: AuthUser;
@@ -32,6 +33,7 @@ function HeaderFile({
   const checkAuth = useSelector((store: Initial) => store.authUser as AuthUser);
   const data = useSelector((store: Initial) => store.localStorageData);
   const [render, setRender] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   // follow to user function
   const followFun = () => {
@@ -59,6 +61,8 @@ function HeaderFile({
         console.log(err);
       });
   };
+
+
 
   const buttonStyle =
     'px-4 py-1 bg-gray-200 rounded-md text-sm cursor-pointer tracking-wider hover:bg-gray-400 justify-center items-center';
@@ -102,6 +106,7 @@ function HeaderFile({
             <UnfollowPopup
               setLoading={setLoading}
               userId={userData?._id}
+              userData={userData}
               setUserData={setUserData}>
               <button
                 className={`w-[100px] ${buttonStyle} flex justify-center items-center`}>
@@ -119,7 +124,7 @@ function HeaderFile({
           {checkAuth._id === id ? (
             <button className={buttonStyle}>View archive</button>
           ) : (
-            <button className={buttonStyle}>Message</button>
+            <button className={buttonStyle} >Message</button>
           )}
           {/* for third button  */}
           {checkAuth._id === id ? (
@@ -153,7 +158,7 @@ function HeaderFile({
           </p>
         </div>
         <p className='text-sm'>{userData?.name}</p>
-        <p className='text-sm'>struggle</p>
+        <p className='text-sm'>Hard word is a key of success...</p>
       </div>
     </header>
   );
